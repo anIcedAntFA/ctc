@@ -63,7 +63,7 @@ src/
 
 ### Structure Rationale
 
-- **`clipboard/` as a self-contained module:** Each domain (clipboard, future storage, future media) gets its own directory. This maps directly to subpath exports (`@browser-utils/core/clipboard`) and enables consumers to import only what they need.
+- **`clipboard/` as a self-contained module:** Each domain (clipboard, future storage, future media) gets its own directory. This maps directly to subpath exports (`@ngockhoi96/core/clipboard`) and enables consumers to import only what they need.
 - **One function per file:** `copy.ts`, `read.ts`, `detect.ts` each contain one concern. This is the strongest tree-shaking guarantee because bundlers can eliminate entire files. Barrel files only re-export, never contain logic.
 - **`fallback.ts` is separate from `copy.ts`:** The execCommand fallback is an explicit opt-in, not mixed into the modern API. Consumers who only target HTTPS never pay for fallback code.
 - **`utils/` is internal-only:** Not exported from the root barrel. These are implementation details consumed by clipboard/ (and future modules). Bundlers will inline or tree-shake them as needed.
@@ -154,7 +154,7 @@ export function handleError(
   cause?: unknown,
 ): void {
   const error = createError(code, message, cause)
-  console.warn(`[@browser-utils] ${code}: ${message}`)
+  console.warn(`[@ngockhoi96] ${code}: ${message}`)
   onError?.(error)
 }
 ```
@@ -261,7 +261,7 @@ handleError(code, message, onError?, cause?)
     |
     +--> createError({ code, message, cause })
     |
-    +--> console.warn(`[@browser-utils] ${code}: ${message}`)
+    +--> console.warn(`[@ngockhoi96] ${code}: ${message}`)
     |
     +--> onError?.(error)   // invoke callback if provided
 ```
@@ -342,7 +342,7 @@ src/index.ts          (root barrel - depends on clipboard/index.ts)
 
 ### Anti-Pattern 5: Deep Internal Imports by Consumers
 
-**What people do:** Import from internal paths like `@browser-utils/core/utils/errors`.
+**What people do:** Import from internal paths like `@ngockhoi96/core/utils/errors`.
 **Why it's wrong:** Internal modules are implementation details. Exposing them couples consumers to your file structure, preventing refactoring.
 **Do this instead:** Only expose subpath exports for public modules (`./clipboard`). `utils/` is never in the exports map. If consumers need error types, re-export them from the public barrel.
 

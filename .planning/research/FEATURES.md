@@ -111,8 +111,8 @@ Features to add once core is validated and users provide feedback.
 
 - [ ] `copyRichContent(data)` -- Add when users request HTML/image copy. Moderate complexity from ClipboardItem API differences across browsers.
 - [ ] `readRichContent()` -- Companion to copyRichContent. Add together.
-- [ ] React hook `useCopyToClipboard()` -- Add when React users request it. Requires separate package (@browser-utils/react).
-- [ ] Vue composable `useCopyToClipboard()` -- Add when Vue users request it. Requires separate package (@browser-utils/vue).
+- [ ] React hook `useCopyToClipboard()` -- Add when React users request it. Requires separate package (@ngockhoi96/react).
+- [ ] Vue composable `useCopyToClipboard()` -- Add when Vue users request it. Requires separate package (@ngockhoi96/vue).
 
 ### Future Consideration (v0.3.0+)
 

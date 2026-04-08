@@ -29,6 +29,6 @@ export function handleError(
 	if (onError) {
 		onError(error)
 	} else {
-		console.warn(`[browser-utils] ${error.code}: ${error.message}`)
+		console.warn(`[ngockhoi96] ${error.code}: ${error.message}`)
 	}
 }

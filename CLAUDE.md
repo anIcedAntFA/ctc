@@ -55,7 +55,7 @@ pnpm validate      — run publint + attw
 
 **Browser Utilities Library**
 
-A modular, tree-shakeable browser utilities library starting with clipboard operations. Framework-agnostic core with zero dependencies, designed to scale into storage, media, DOM, and other browser APIs over time. Published as an npm package (name TBD — "cttc" is a placeholder).
+A modular, tree-shakeable browser utilities library starting with clipboard operations. Framework-agnostic core with zero dependencies, designed to scale into storage, media, DOM, and other browser APIs over time. Published as `@ngockhoi96/ctc` on npm.
 
 **Core Value:** Developers can copy, read, and detect clipboard support in any browser environment with a single import — no framework lock-in, no bloat, no surprises.
 

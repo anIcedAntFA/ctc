@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A modular, tree-shakeable browser utilities library starting with clipboard operations. Framework-agnostic core with zero dependencies, designed to scale into storage, media, DOM, and other browser APIs over time. Published as an npm package (name TBD — "cttc" is a placeholder).
+A modular, tree-shakeable browser utilities library starting with clipboard operations. Framework-agnostic core with zero dependencies, designed to scale into storage, media, DOM, and other browser APIs over time. Published as `@ngockhoi96/ctc` on npm.
 
 ## Core Value
 
@@ -55,7 +55,7 @@ Developers can copy, read, and detect clipboard support in any browser environme
 - **Error philosophy:** Functions return `boolean`/`null` for failures, never throw. Optional `onError` callback provides typed error details when callers need them.
 - **Fallback strategy:** execCommand fallback is an explicit, separate function — keeps modern `copyToClipboard()` clean while providing HTTP/legacy escape hatch.
 - **Competitive landscape:** Existing libs are either write-only (clipboard-copy), use deprecated APIs (copy-to-clipboard), or are framework-locked (@vueuse, usehooks-ts). This library targets the gap: framework-agnostic, modern, modular.
-- **Package name:** "cttc" is a placeholder. Final name TBD before npm publish.
+- **Package name:** `@ngockhoi96/ctc` — scoped under npm user, public access.
 
 ## Constraints
 

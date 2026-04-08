@@ -107,7 +107,7 @@ Each task was committed atomically:
 
 **2. [Rule 3 - Blocking] Added typesVersions for node10 type resolution**
 - **Found during:** Task 3 (attw validation)
-- **Issue:** attw reported NoResolution for `@browser-utils/core/clipboard` under node10 because node10 doesn't support exports maps.
+- **Issue:** attw reported NoResolution for `@ngockhoi96/core/clipboard` under node10 because node10 doesn't support exports maps.
 - **Fix:** Added `typesVersions` field mapping clipboard subpath to declaration file.
 - **Files modified:** package.json
 - **Verification:** `pnpm validate` exits 0 with all green across node10/node16/bundler

@@ -171,7 +171,7 @@ Verify Biome and tsdown still work correctly after the change.
 ### IN-03: `src/index.ts` main entry point currently exports only infrastructure — no user-facing functions
 
 **File:** `src/index.ts:1-12`
-**Issue:** The main package entry (`"."` in exports) currently only exports types and internal utilities. There are no `copyToClipboard`, `isClipboardSupported`, or similar user-facing functions. This is expected for a foundation phase, but it means `publint` and `attw` validation runs will test an entry point that exports nothing useful. Consumers importing from `@browser-utils/core` get only types and internal helpers.
+**Issue:** The main package entry (`"."` in exports) currently only exports types and internal utilities. There are no `copyToClipboard`, `isClipboardSupported`, or similar user-facing functions. This is expected for a foundation phase, but it means `publint` and `attw` validation runs will test an entry point that exports nothing useful. Consumers importing from `@ngockhoi96/core` get only types and internal helpers.
 
 **Fix:** No immediate code change needed — this resolves naturally when clipboard functions are implemented. Track this as a known state: the `"."` entry point will remain sparse until Phase 2 clipboard functions land. When adding the first clipboard function, ensure it is exported from both `src/clipboard/index.ts` and `src/index.ts`.
 
