@@ -104,7 +104,12 @@ export function copyToClipboardLegacy(
 		)
 		return false
 	} finally {
-		// Always remove the textarea — even if execCommand threw (Pitfall 4)
-		document.body.removeChild(textarea)
+		// Guard with isConnected before removing — prevents NotFoundError if a
+		// framework (e.g., React 18 Strict Mode) or MutationObserver removed the
+		// node between appendChild and here. textarea.remove() does not throw on
+		// already-detached nodes. (Pitfall 4)
+		if (textarea.isConnected) {
+			textarea.remove()
+		}
 	}
 }
