@@ -1,0 +1,28 @@
+pre-commit:
+  parallel: true
+  commands:
+    lint:
+      run: pnpm biome check --no-errors-on-unmatched {staged_files}
+      glob: "*.{ts,js,json}"
+    format:
+      run: pnpm biome format --no-errors-on-unmatched {staged_files}
+      glob: "*.{ts,js,json}"
+    typecheck:
+      run: pnpm tsc --noEmit
+    test:
+      run: pnpm vitest run --passWithNoTests
+      glob: "*.{ts,js}"
+
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm commitlint --edit {1}
+
+pre-push:
+  commands:
+    build:
+      run: pnpm build
+    test:
+      run: pnpm test
+    validate:
+      run: pnpm validate
