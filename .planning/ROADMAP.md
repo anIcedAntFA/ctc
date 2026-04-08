@@ -27,11 +27,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. package.json exports map resolves correctly for both root and `./clipboard` subpath (verified by publint + attw)
   3. Bundle size of core output is under 1KB gzip (verified by size-limit)
   4. Git hooks enforce linting and conventional commit format on every commit
-**Plans**: TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md — Package init, TypeScript config, skeleton source, tsdown build, validation (BUILD-01..05)
+- [ ] 01-02-PLAN.md — Biome linting, Lefthook hooks, commitlint, changesets, LICENSE (DX-01, DX-02, DX-04)
 
 ### Phase 2: Clipboard API
 **Goal**: Developers can import clipboard functions and use them to copy, read, and detect clipboard support with typed error handling
