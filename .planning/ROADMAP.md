@@ -30,7 +30,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans:** 2 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Package init, TypeScript config, skeleton source, tsdown build, validation (BUILD-01..05)
+- [x] 01-01-PLAN.md — Package init, TypeScript config, skeleton source, tsdown build, validation (BUILD-01..05)
 - [ ] 01-02-PLAN.md — Biome linting, Lefthook hooks, commitlint, changesets, LICENSE (DX-01, DX-02, DX-04)
 
 ### Phase 2: Clipboard API

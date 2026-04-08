@@ -27,11 +27,11 @@ Requirements for v0.1.0 release. Each maps to roadmap phases.
 
 ### Build & Package
 
-- [ ] **BUILD-01**: ESM + CJS + .d.ts output via tsdown
-- [ ] **BUILD-02**: Tree-shakeable with `"sideEffects": false`
-- [ ] **BUILD-03**: Core bundle < 1KB gzip
-- [ ] **BUILD-04**: package.json exports map (root + clipboard subpath)
-- [ ] **BUILD-05**: Validated with publint + arethetypeswrong
+- [x] **BUILD-01**: ESM + CJS + .d.ts output via tsdown
+- [x] **BUILD-02**: Tree-shakeable with `"sideEffects": false`
+- [x] **BUILD-03**: Core bundle < 1KB gzip
+- [x] **BUILD-04**: package.json exports map (root + clipboard subpath)
+- [x] **BUILD-05**: Validated with publint + arethetypeswrong
 
 ### Testing
 
@@ -95,11 +95,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| BUILD-01 | Phase 1 | Pending |
-| BUILD-02 | Phase 1 | Pending |
-| BUILD-03 | Phase 1 | Pending |
-| BUILD-04 | Phase 1 | Pending |
-| BUILD-05 | Phase 1 | Pending |
+| BUILD-01 | Phase 1 | Complete |
+| BUILD-02 | Phase 1 | Complete |
+| BUILD-03 | Phase 1 | Complete |
+| BUILD-04 | Phase 1 | Complete |
+| BUILD-05 | Phase 1 | Complete |
 | DX-01 | Phase 1 | Pending |
 | DX-02 | Phase 1 | Pending |
 | DX-04 | Phase 1 | Pending |
