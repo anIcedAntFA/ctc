@@ -5,10 +5,9 @@ export type {
 	OnErrorCallback,
 } from './clipboard/index.ts'
 export {
-	createError,
-	handleError,
-	isBrowser,
+	copyToClipboard,
+	copyToClipboardLegacy,
 	isClipboardReadSupported,
 	isClipboardSupported,
-	isSecureContext,
+	readFromClipboard,
 } from './clipboard/index.ts'
