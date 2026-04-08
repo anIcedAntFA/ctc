@@ -1,6 +1,20 @@
 import type { BrowserUtilsError, ErrorCode, OnErrorCallback } from './types.ts'
 
 /**
+ * Error codes that represent expected, recoverable failures.
+ *
+ * Expected errors are logged with `console.warn`.
+ * Unexpected errors are logged with `console.error`.
+ *
+ * @internal
+ */
+const EXPECTED_ERROR_CODES = new Set<ErrorCode>([
+	'CLIPBOARD_NOT_SUPPORTED',
+	'INSECURE_CONTEXT',
+	'CLIPBOARD_PERMISSION_DENIED',
+])
+
+/**
  * Create a structured browser utils error.
  *
  * @param code - Error code identifying the failure type
@@ -17,7 +31,12 @@ export function createError(
 }
 
 /**
- * Invoke the onError callback if provided, otherwise log a warning.
+ * Invoke the onError callback if provided, otherwise log a warning or error.
+ *
+ * Expected failures (CLIPBOARD_NOT_SUPPORTED, INSECURE_CONTEXT,
+ * CLIPBOARD_PERMISSION_DENIED) are logged with `console.warn`.
+ * Unexpected failures (CLIPBOARD_WRITE_FAILED, CLIPBOARD_READ_FAILED) are
+ * logged with `console.error` and include the original cause for debugging.
  *
  * @param error - The structured error to handle
  * @param onError - Optional callback for error reporting
@@ -28,7 +47,14 @@ export function handleError(
 ): void {
 	if (onError) {
 		onError(error)
+		return
+	}
+
+	const prefix = '[ngockhoi96]'
+
+	if (EXPECTED_ERROR_CODES.has(error.code)) {
+		console.warn(`${prefix} ${error.code}: ${error.message}`)
 	} else {
-		console.warn(`[ngockhoi96] ${error.code}: ${error.message}`)
+		console.error(`${prefix} ${error.code}: ${error.message}`, error.cause)
 	}
 }
