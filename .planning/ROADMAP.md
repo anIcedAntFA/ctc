@@ -43,11 +43,11 @@ Plans:
   3. `copyToClipboardLegacy` copies text via execCommand on HTTP pages where the modern API is unavailable
   4. `isClipboardSupported()` and `isClipboardReadSupported()` return accurate booleans for the current browser environment
   5. All clipboard functions accept an optional `onError` callback that receives a typed `BrowserUtilsError` with specific error codes (including secure context detection), and all exports are importable in Node.js without crashing
-**Plans**: TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md — Update handleError() routing + create detect.ts (DETECT-01, DETECT-02, DETECT-03, DETECT-04, ERR-01, ERR-02)
+- [ ] 02-02-PLAN.md — copyToClipboard, readFromClipboard, copyToClipboardLegacy + barrel cleanup (CLIP-01, CLIP-02, CLIP-03, ERR-01, ERR-02)
 
 ### Phase 3: Quality & Release
 **Goal**: The library has full test coverage, automated CI, and is publishable to npm with a single command
