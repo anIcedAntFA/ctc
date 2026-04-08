@@ -46,20 +46,20 @@ export async function copyToClipboard(
 		return false
 	}
 
-	if (typeof navigator.clipboard?.writeText !== 'function') {
-		handleError(
-			createError('CLIPBOARD_NOT_SUPPORTED', 'Clipboard API not available'),
-			options?.onError,
-		)
-		return false
-	}
-
 	if (!isSecureContext()) {
 		handleError(
 			createError(
 				'INSECURE_CONTEXT',
 				'Clipboard API requires a secure context (HTTPS)',
 			),
+			options?.onError,
+		)
+		return false
+	}
+
+	if (typeof navigator.clipboard?.writeText !== 'function') {
+		handleError(
+			createError('CLIPBOARD_NOT_SUPPORTED', 'Clipboard API not available'),
 			options?.onError,
 		)
 		return false

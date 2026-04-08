@@ -41,22 +41,22 @@ export async function readFromClipboard(
 		return null
 	}
 
-	if (typeof navigator.clipboard?.readText !== 'function') {
+	if (!isSecureContext()) {
 		handleError(
 			createError(
-				'CLIPBOARD_NOT_SUPPORTED',
-				'Clipboard read API not available',
+				'INSECURE_CONTEXT',
+				'Clipboard API requires a secure context (HTTPS)',
 			),
 			options?.onError,
 		)
 		return null
 	}
 
-	if (!isSecureContext()) {
+	if (typeof navigator.clipboard?.readText !== 'function') {
 		handleError(
 			createError(
-				'INSECURE_CONTEXT',
-				'Clipboard API requires a secure context (HTTPS)',
+				'CLIPBOARD_NOT_SUPPORTED',
+				'Clipboard read API not available',
 			),
 			options?.onError,
 		)
