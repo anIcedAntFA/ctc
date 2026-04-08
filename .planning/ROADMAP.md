@@ -59,11 +59,13 @@ Plans:
   3. CI pipeline runs lint, build, test, and validate (publint, size-limit, attw) on every PR across Ubuntu + Node 20/22
   4. Merging a changeset to main triggers automated npm publish with changelog generation
   5. README contains quick start example, full API documentation, and browser support table
-**Plans**: TBD
+**Plans:** 4 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
+- [ ] 03-01-PLAN.md — Vitest unit tests for all 6 core files with V8 coverage + 100% thresholds (TEST-01)
+- [ ] 03-02-PLAN.md — Playwright E2E tests across Chromium, Firefox, WebKit with static HTML fixture (TEST-02)
+- [ ] 03-03-PLAN.md — GitHub Actions CI pipeline + changesets release workflow (CI-01, CI-02, CI-03)
+- [ ] 03-04-PLAN.md — README with badges, API reference for all 5 functions, browser support table (DX-03)
 
 ## Progress
 
@@ -74,4 +76,4 @@ Phases execute in numeric order: 1 -> 2 -> 3
 |-------|----------------|--------|-----------|
 | 1. Project Foundation | 2/2 | Complete    | 2026-04-08 |
 | 2. Clipboard API | 2/2 | Complete   | 2026-04-08 |
-| 3. Quality & Release | 0/2 | Not started | - |
+| 3. Quality & Release | 0/4 | Not started | - |
