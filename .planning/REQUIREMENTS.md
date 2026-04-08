@@ -95,35 +95,35 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CLIP-01 | Pending | Pending |
-| CLIP-02 | Pending | Pending |
-| CLIP-03 | Pending | Pending |
-| DETECT-01 | Pending | Pending |
-| DETECT-02 | Pending | Pending |
-| DETECT-03 | Pending | Pending |
-| DETECT-04 | Pending | Pending |
-| ERR-01 | Pending | Pending |
-| ERR-02 | Pending | Pending |
-| BUILD-01 | Pending | Pending |
-| BUILD-02 | Pending | Pending |
-| BUILD-03 | Pending | Pending |
-| BUILD-04 | Pending | Pending |
-| BUILD-05 | Pending | Pending |
-| TEST-01 | Pending | Pending |
-| TEST-02 | Pending | Pending |
-| CI-01 | Pending | Pending |
-| CI-02 | Pending | Pending |
-| CI-03 | Pending | Pending |
-| DX-01 | Pending | Pending |
-| DX-02 | Pending | Pending |
-| DX-03 | Pending | Pending |
-| DX-04 | Pending | Pending |
+| BUILD-01 | Phase 1 | Pending |
+| BUILD-02 | Phase 1 | Pending |
+| BUILD-03 | Phase 1 | Pending |
+| BUILD-04 | Phase 1 | Pending |
+| BUILD-05 | Phase 1 | Pending |
+| DX-01 | Phase 1 | Pending |
+| DX-02 | Phase 1 | Pending |
+| DX-04 | Phase 1 | Pending |
+| CLIP-01 | Phase 2 | Pending |
+| CLIP-02 | Phase 2 | Pending |
+| CLIP-03 | Phase 2 | Pending |
+| DETECT-01 | Phase 2 | Pending |
+| DETECT-02 | Phase 2 | Pending |
+| DETECT-03 | Phase 2 | Pending |
+| DETECT-04 | Phase 2 | Pending |
+| ERR-01 | Phase 2 | Pending |
+| ERR-02 | Phase 2 | Pending |
+| TEST-01 | Phase 3 | Pending |
+| TEST-02 | Phase 3 | Pending |
+| CI-01 | Phase 3 | Pending |
+| CI-02 | Phase 3 | Pending |
+| CI-03 | Phase 3 | Pending |
+| DX-03 | Phase 3 | Pending |
 
 **Coverage:**
 - v1 requirements: 23 total
-- Mapped to phases: 0
-- Unmapped: 23 ⚠️
+- Mapped to phases: 23
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-08*
-*Last updated: 2026-04-08 after initial definition*
+*Last updated: 2026-04-08 after roadmap creation*
