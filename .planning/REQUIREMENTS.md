@@ -15,15 +15,15 @@ Requirements for v0.1.0 release. Each maps to roadmap phases.
 
 ### Detection & Safety
 
-- [ ] **DETECT-01**: User can check Clipboard API availability via `isClipboardSupported()`
-- [ ] **DETECT-02**: User can check clipboard read support via `isClipboardReadSupported()`
-- [ ] **DETECT-03**: All exports are SSR-safe (importable in Node.js without crash)
-- [ ] **DETECT-04**: Secure context (HTTPS) detection with specific error code
+- [x] **DETECT-01**: User can check Clipboard API availability via `isClipboardSupported()`
+- [x] **DETECT-02**: User can check clipboard read support via `isClipboardReadSupported()`
+- [x] **DETECT-03**: All exports are SSR-safe (importable in Node.js without crash)
+- [x] **DETECT-04**: Secure context (HTTPS) detection with specific error code
 
 ### Error Handling
 
-- [ ] **ERR-01**: All clipboard functions accept optional `onError` callback with typed `BrowserUtilsError`
-- [ ] **ERR-02**: All clipboard functions return `boolean`/`null` for failures, never throw
+- [x] **ERR-01**: All clipboard functions accept optional `onError` callback with typed `BrowserUtilsError`
+- [x] **ERR-02**: All clipboard functions return `boolean`/`null` for failures, never throw
 
 ### Build & Package
 
@@ -106,12 +106,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CLIP-01 | Phase 2 | Pending |
 | CLIP-02 | Phase 2 | Pending |
 | CLIP-03 | Phase 2 | Pending |
-| DETECT-01 | Phase 2 | Pending |
-| DETECT-02 | Phase 2 | Pending |
-| DETECT-03 | Phase 2 | Pending |
-| DETECT-04 | Phase 2 | Pending |
-| ERR-01 | Phase 2 | Pending |
-| ERR-02 | Phase 2 | Pending |
+| DETECT-01 | Phase 2 | Complete |
+| DETECT-02 | Phase 2 | Complete |
+| DETECT-03 | Phase 2 | Complete |
+| DETECT-04 | Phase 2 | Complete |
+| ERR-01 | Phase 2 | Complete |
+| ERR-02 | Phase 2 | Complete |
 | TEST-01 | Phase 3 | Pending |
 | TEST-02 | Phase 3 | Pending |
 | CI-01 | Phase 3 | Pending |
