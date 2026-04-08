@@ -12,7 +12,12 @@ Developers can copy, read, and detect clipboard support in any browser environme
 
 ### Validated
 
-(None yet — ship to validate)
+- ✓ TypeScript strict mode, full `.d.ts` declarations — Phase 1
+- ✓ ESM + CJS output via tsdown (Rolldown-based bundler) — Phase 1
+- ✓ Tree-shakeable with `"sideEffects": false` — Phase 1
+- ✓ Bundle size < 1KB gzip for core — Phase 1
+- ✓ MIT License — Phase 1
+- ✓ Semantic versioning (pre-1.0: breaking at minor) — Phase 1
 
 ### Active
 
@@ -24,18 +29,12 @@ Developers can copy, read, and detect clipboard support in any browser environme
 - [ ] Explicit execCommand fallback function for HTTP/older browser compatibility
 - [ ] `onError` callback with typed error codes (`BrowserUtilsError`) on all clipboard functions
 - [ ] SSR-safe guards (`typeof navigator !== 'undefined'`)
-- [ ] TypeScript strict mode, full `.d.ts` declarations
-- [ ] ESM + CJS output via tsdown (Rolldown-based bundler)
-- [ ] Tree-shakeable with `"sideEffects": false`
-- [ ] Bundle size < 1KB gzip for core
 - [ ] Unit tests (Vitest) — 100% coverage on core functions
 - [ ] E2E tests (Playwright) — Chromium + Firefox
 - [ ] CI pipeline: lint (Biome) → build (tsdown) → test (Vitest + Playwright) → validate (publint, size-limit, attw)
 - [ ] Ubuntu + Node 20/22 + Chromium/Firefox CI matrix
 - [ ] README with quick start, API docs, browser support table
-- [ ] MIT License
 - [ ] npm publish workflow via changesets
-- [ ] Semantic versioning (pre-1.0: breaking at minor)
 
 ### Out of Scope
 
@@ -96,4 +95,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-08 after initialization*
+*Last updated: 2026-04-08 after Phase 1 completion*
