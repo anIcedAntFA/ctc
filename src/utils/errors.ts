@@ -46,7 +46,12 @@ export function handleError(
 	onError?: OnErrorCallback,
 ): void {
 	if (onError) {
-		onError(error)
+		try {
+			onError(error)
+		} catch {
+			// Consumer callback errors must not escape — the no-throw contract
+			// applies to the full call stack originating from clipboard functions.
+		}
 		return
 	}
 
