@@ -5,4 +5,5 @@ export type {
 	ErrorCode,
 	OnErrorCallback,
 } from '../utils/types.ts'
+export { isClipboardReadSupported, isClipboardSupported } from './detect.ts'
 export type { ClipboardOptions } from './types.ts'

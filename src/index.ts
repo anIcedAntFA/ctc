@@ -8,5 +8,7 @@ export {
 	createError,
 	handleError,
 	isBrowser,
+	isClipboardReadSupported,
+	isClipboardSupported,
 	isSecureContext,
 } from './clipboard/index.ts'
