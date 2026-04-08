@@ -9,9 +9,9 @@ Requirements for v0.1.0 release. Each maps to roadmap phases.
 
 ### Clipboard Operations
 
-- [ ] **CLIP-01**: User can copy text to clipboard via `copyToClipboard(text, options?)`
-- [ ] **CLIP-02**: User can read text from clipboard via `readFromClipboard()`
-- [ ] **CLIP-03**: User can copy text on HTTP/legacy browsers via explicit `copyToClipboardLegacy()`
+- [x] **CLIP-01**: User can copy text to clipboard via `copyToClipboard(text, options?)`
+- [x] **CLIP-02**: User can read text from clipboard via `readFromClipboard()`
+- [x] **CLIP-03**: User can copy text on HTTP/legacy browsers via explicit `copyToClipboardLegacy()`
 
 ### Detection & Safety
 
@@ -103,9 +103,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | DX-01 | Phase 1 | Complete |
 | DX-02 | Phase 1 | Complete |
 | DX-04 | Phase 1 | Complete |
-| CLIP-01 | Phase 2 | Pending |
-| CLIP-02 | Phase 2 | Pending |
-| CLIP-03 | Phase 2 | Pending |
+| CLIP-01 | Phase 2 | Complete |
+| CLIP-02 | Phase 2 | Complete |
+| CLIP-03 | Phase 2 | Complete |
 | DETECT-01 | Phase 2 | Complete |
 | DETECT-02 | Phase 2 | Complete |
 | DETECT-03 | Phase 2 | Complete |
