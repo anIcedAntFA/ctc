@@ -1,0 +1,60 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.4.10/schema.json",
+	"root": true,
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"correctness": {
+				"noUnusedImports": "error",
+				"noUnusedVariables": "error"
+			},
+			"style": {
+				"noDefaultExport": "error",
+				"useExportType": "error",
+				"useImportType": "error"
+			},
+			"suspicious": {
+				"noExplicitAny": "error"
+			},
+			"nursery": {
+				"recommended": true
+			}
+		}
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"lineWidth": 80
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single",
+			"semicolons": "asNeeded",
+			"trailingCommas": "all"
+		}
+	},
+	"overrides": [
+		{
+			"includes": ["*.config.ts", "*.config.js"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noDefaultExport": "off"
+					}
+				}
+			}
+		}
+	],
+	"files": {
+		"includes": [
+			"src/**",
+			"*.config.ts",
+			"*.config.js",
+			"*.json",
+			"!!**/dist/",
+			"!!**/node_modules/",
+			"!!**/.changeset/"
+		]
+	}
+}
