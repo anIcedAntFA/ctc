@@ -1,0 +1,57 @@
+# .github/workflows/release.yml
+# Triggers on push to main.
+# Uses changesets/action@v1 to:
+#   1. Open a "Version PR" (bumps version + generates CHANGELOG.md) when .changeset files are present
+#   2. Publish to npm when the Version PR is merged (no .changeset files remain)
+# Per D-18 (changesets/action), D-19 (NPM_TOKEN), D-20 (GITHUB_TOKEN auto-provided)
+# Requires: NPM_TOKEN secret in GitHub repo → Settings → Secrets and variables → Actions
+name: Release
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write        # needed to push version commits and create git tags
+  pull-requests: write   # needed to open Version PR
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # required: changesets needs full history to detect changed packages (Pitfall 5)
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'   # auto-writes NODE_AUTH_TOKEN to .npmrc
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Create Version PR or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm publish --no-git-checks   # --no-git-checks: changesets already committed version bumps
+          commit: 'chore: version packages'
+          title: 'chore: version packages'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}   # used by .npmrc from registry-url above
