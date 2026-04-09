@@ -36,7 +36,7 @@ Requirements for v0.1.0 release. Each maps to roadmap phases.
 ### Testing
 
 - [x] **TEST-01**: Unit tests (Vitest) with 100% coverage on core functions
-- [ ] **TEST-02**: E2E tests (Playwright) across Chromium, Firefox, WebKit
+- [x] **TEST-02**: E2E tests (Playwright) across Chromium, Firefox, WebKit
 
 ### CI/CD & Release
 
@@ -113,7 +113,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ERR-01 | Phase 2 | Complete |
 | ERR-02 | Phase 2 | Complete |
 | TEST-01 | Phase 3 | Complete |
-| TEST-02 | Phase 3 | Pending |
+| TEST-02 | Phase 3 | Complete |
 | CI-01 | Phase 3 | Pending |
 | CI-02 | Phase 3 | Pending |
 | CI-03 | Phase 3 | Pending |
