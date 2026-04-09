@@ -48,7 +48,7 @@ Requirements for v0.1.0 release. Each maps to roadmap phases.
 
 - [x] **DX-01**: Lefthook for git hooks (pre-commit: lint+test, commit-msg: commitlint)
 - [x] **DX-02**: Commitlint enforcing conventional commit format
-- [ ] **DX-03**: README with quick start, API docs, browser support
+- [x] **DX-03**: README with quick start, API docs, browser support
 - [x] **DX-04**: MIT License
 
 ## v2 Requirements
@@ -117,7 +117,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CI-01 | Phase 3 | Pending |
 | CI-02 | Phase 3 | Pending |
 | CI-03 | Phase 3 | Pending |
-| DX-03 | Phase 3 | Pending |
+| DX-03 | Phase 3 | Complete |
 
 **Coverage:**
 - v1 requirements: 23 total
