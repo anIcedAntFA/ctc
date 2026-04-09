@@ -40,9 +40,9 @@ Requirements for v0.1.0 release. Each maps to roadmap phases.
 
 ### CI/CD & Release
 
-- [ ] **CI-01**: CI pipeline: lint → build → test → validate
-- [ ] **CI-02**: npm publish workflow via changesets
-- [ ] **CI-03**: Ubuntu + Node 20/22 + Chromium/Firefox/WebKit CI matrix
+- [x] **CI-01**: CI pipeline: lint → build → test → validate
+- [x] **CI-02**: npm publish workflow via changesets
+- [x] **CI-03**: Ubuntu + Node 20/22 + Chromium/Firefox/WebKit CI matrix
 
 ### Dev Tooling
 
@@ -114,9 +114,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ERR-02 | Phase 2 | Complete |
 | TEST-01 | Phase 3 | Complete |
 | TEST-02 | Phase 3 | Complete |
-| CI-01 | Phase 3 | Pending |
-| CI-02 | Phase 3 | Pending |
-| CI-03 | Phase 3 | Pending |
+| CI-01 | Phase 3 | Complete |
+| CI-02 | Phase 3 | Complete |
+| CI-03 | Phase 3 | Complete |
 | DX-03 | Phase 3 | Complete |
 
 **Coverage:**
