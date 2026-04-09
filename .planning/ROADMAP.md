@@ -62,7 +62,7 @@ Plans:
 **Plans:** 4 plans
 
 Plans:
-- [ ] 03-01-PLAN.md — Vitest unit tests for all 6 core files with V8 coverage + 100% thresholds (TEST-01)
+- [x] 03-01-PLAN.md — Vitest unit tests for all 6 core files with V8 coverage + 100% thresholds (TEST-01)
 - [ ] 03-02-PLAN.md — Playwright E2E tests across Chromium, Firefox, WebKit with static HTML fixture (TEST-02)
 - [ ] 03-03-PLAN.md — GitHub Actions CI pipeline + changesets release workflow (CI-01, CI-02, CI-03)
 - [ ] 03-04-PLAN.md — README with badges, API reference for all 5 functions, browser support table (DX-03)
