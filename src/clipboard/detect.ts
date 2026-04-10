@@ -1,4 +1,4 @@
-import { isBrowser, isSecureContext } from '../utils/env.ts'
+import { isBrowser, isSecureContext } from '../lib/env.ts'
 
 /**
  * Check if the Clipboard API is available and usable in the current context.

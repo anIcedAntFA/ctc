@@ -1,5 +1,5 @@
-import { isBrowser } from '../utils/env.ts'
-import { createError, handleError } from '../utils/errors.ts'
+import { isBrowser } from '../lib/env.ts'
+import { createError, handleError } from '../lib/errors.ts'
 import type { ClipboardOptions } from './types.ts'
 
 /**

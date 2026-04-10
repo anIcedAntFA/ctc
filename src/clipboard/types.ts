@@ -1,4 +1,4 @@
-import type { OnErrorCallback } from '../utils/types.ts'
+import type { OnErrorCallback } from '../lib/types.ts'
 
 /**
  * Options for clipboard operations.

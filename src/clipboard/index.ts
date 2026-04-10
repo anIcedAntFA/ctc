@@ -2,7 +2,7 @@ export type {
 	BrowserUtilsError,
 	ErrorCode,
 	OnErrorCallback,
-} from '../utils/types.ts'
+} from '../lib/types.ts'
 export { copyToClipboard } from './copy.ts'
 export { isClipboardReadSupported, isClipboardSupported } from './detect.ts'
 export { copyToClipboardLegacy } from './fallback.ts'

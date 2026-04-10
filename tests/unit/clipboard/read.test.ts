@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { readFromClipboard } from '../../../src/clipboard/read.ts'
-import type { BrowserUtilsError } from '../../../src/utils/types.ts'
+import type { BrowserUtilsError } from '../../../src/lib/types.ts'
 
 describe('readFromClipboard', () => {
 	const mockReadText = vi.fn()

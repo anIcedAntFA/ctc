@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { createError, handleError } from '../../../src/utils/errors.ts'
-import type { BrowserUtilsError } from '../../../src/utils/types.ts'
+import { createError, handleError } from '../../../src/lib/errors.ts'
+import type { BrowserUtilsError } from '../../../src/lib/types.ts'
 
 describe('createError', () => {
 	it('returns an error object with code, message, and cause', () => {

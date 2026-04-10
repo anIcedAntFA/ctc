@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { copyToClipboard } from '../../../src/clipboard/copy.ts'
-import type { BrowserUtilsError } from '../../../src/utils/types.ts'
+import type { BrowserUtilsError } from '../../../src/lib/types.ts'
 
 describe('copyToClipboard', () => {
 	const mockWriteText = vi.fn()

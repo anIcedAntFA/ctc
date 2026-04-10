@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { isBrowser, isSecureContext } from '../../../src/utils/env.ts'
+import { isBrowser, isSecureContext } from '../../../src/lib/env.ts'
 
 describe('isBrowser', () => {
 	afterEach(() => {
