@@ -63,7 +63,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: pnpm publish --no-git-checks   # --no-git-checks: changesets already committed version bumps
+          publish: npm publish --access public
           commit: 'chore: version packages'
           title: 'chore: version packages'
         env:
