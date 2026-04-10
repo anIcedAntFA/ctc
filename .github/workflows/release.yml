@@ -3,8 +3,17 @@
 # Uses changesets/action@v1 to:
 #   1. Open a "Version PR" (bumps version + generates CHANGELOG.md) when .changeset files are present
 #   2. Publish to npm when the Version PR is merged (no .changeset files remain)
-# Per D-18 (changesets/action), D-19 (NPM_TOKEN), D-20 (GITHUB_TOKEN auto-provided)
-# Requires: NPM_TOKEN secret in GitHub repo → Settings → Secrets and variables → Actions
+#
+# Uses npm OIDC Trusted Publishing — no NPM_TOKEN secret required.
+# Setup checklist (one-time, after the first publish):
+#   1. Go to npmjs.com/package/@ngockhoi96/ctc/access → Trusted Publishers → Add a publisher
+#   2. Provider: GitHub Actions
+#      Owner: anIcedAntFA  |  Repository: cttc  |  Workflow: release.yml
+#   3. Delete NPM_TOKEN from GitHub repo secrets once first OIDC publish succeeds
+#
+# First publish only: the package must exist on npm before Trusted Publishers UI appears.
+# For the very first publish, temporarily add NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+# to the changesets step env, publish once, then remove it and configure Trusted Publishers.
 name: Release
 
 on:
@@ -18,6 +27,7 @@ concurrency:
 permissions:
   contents: write        # needed to push version commits and create git tags
   pull-requests: write   # needed to open Version PR
+  id-token: write        # needed for npm OIDC trusted publishing
 
 jobs:
   release:
@@ -36,10 +46,15 @@ jobs:
         with:
           node-version: 22
           cache: 'pnpm'
-          registry-url: 'https://registry.npmjs.org'   # auto-writes NODE_AUTH_TOKEN to .npmrc
+          registry-url: 'https://registry.npmjs.org'   # sets registry in .npmrc; do NOT set NODE_AUTH_TOKEN
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      # Node 22 ships npm v10.x which breaks OIDC for scoped packages (npm/cli#8976).
+      # Upgrade to npm 11.5.1+ to get working OIDC support before publishing.
+      - name: Upgrade npm for OIDC support
+        run: npm install -g npm@latest
 
       - name: Build
         run: pnpm build
@@ -53,5 +68,5 @@ jobs:
           title: 'chore: version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}   # used by .npmrc from registry-url above
+          # NODE_AUTH_TOKEN intentionally absent:
+          # its presence (even empty string) disables OIDC and falls back to token auth (actions/setup-node#1440)
