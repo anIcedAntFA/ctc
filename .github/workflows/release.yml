@@ -8,7 +8,7 @@
 # Setup checklist (one-time, after the first publish):
 #   1. Go to npmjs.com/package/@ngockhoi96/ctc/access → Trusted Publishers → Add a publisher
 #   2. Provider: GitHub Actions
-#      Owner: anIcedAntFA  |  Repository: cttc  |  Workflow: release.yml
+#      Owner: anIcedAntFA  |  Repository: ctc  |  Workflow: release.yml
 #   3. Delete NPM_TOKEN from GitHub repo secrets once first OIDC publish succeeds
 #
 # First publish only: the package must exist on npm before Trusted Publishers UI appears.
@@ -18,7 +18,7 @@ name: Release
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
