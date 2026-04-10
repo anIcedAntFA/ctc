@@ -18,7 +18,7 @@
 		"test:e2e": "playwright test",
 		"size": "size-limit",
 		"validate": "publint && attw --pack",
-		"prepare": "lefthook install",
+		"setup": "lefthook install",
 		"changeset": "changeset"
 	},
 	"files": [
@@ -43,6 +43,7 @@
 		"@commitlint/config-conventional": "20.5.0",
 		"@playwright/test": "^1.59.1",
 		"@size-limit/file": "12.0.1",
+		"@types/node": "^25.6.0",
 		"@vitest/coverage-v8": "4.1.3",
 		"http-server": "^14.1.1",
 		"lefthook": "2.1.5",

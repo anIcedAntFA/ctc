@@ -1,0 +1,10 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"types": ["node"],
+		"noEmit": true,
+		"isolatedDeclarations": false,
+		"declaration": false
+	},
+	"include": ["*.config.ts", "commitlint.config.ts"]
+}
