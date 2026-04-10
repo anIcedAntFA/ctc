@@ -51,11 +51,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # Node 22 ships npm v10.x which breaks OIDC for scoped packages (npm/cli#8976).
-      # Use corepack (built into Node 18+) to upgrade — avoids npm-upgrades-itself bootstrap failure.
-      - name: Upgrade npm for OIDC support
-        run: corepack enable && corepack prepare npm@latest --activate
-
       - name: Build
         run: pnpm build
 
@@ -63,7 +58,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: pnpm publish --no-git-checks   # --no-git-checks: changesets already committed version bumps
+          publish: npm publish --access public
           commit: 'chore: version packages'
           title: 'chore: version packages'
         env:
