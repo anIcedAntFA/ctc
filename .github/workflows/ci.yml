@@ -1,12 +1,12 @@
 # .github/workflows/ci.yml
-# Runs on every PR targeting main.
+# Runs on every PR targeting master.
 # Pipeline: lint-and-build → unit-test (matrix) → e2e-test
-# Per D-09 (full pipeline on every PR), D-10 (ubuntu × Node [20,22] matrix), D-11 (Playwright cache)
+# Turbo orchestrates tasks across the monorepo; each job delegates to turbo run.
 name: CI
 
 on:
   pull_request:
-    branches: [main]
+    branches: [master]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -32,10 +32,10 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: pnpm lint
+        run: pnpm turbo run lint
 
       - name: Build
-        run: pnpm build
+        run: pnpm turbo run build
 
   unit-test:
     name: Unit Tests (Node ${{ matrix.node-version }})
@@ -60,10 +60,10 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Unit tests with coverage
-        run: pnpm test -- --coverage
+        run: pnpm turbo run test -- --coverage
 
       - name: Validate package (publint + attw)
-        run: pnpm validate
+        run: pnpm turbo run validate
 
   e2e-test:
     name: E2E Tests (Chromium / Firefox / WebKit)
@@ -100,7 +100,7 @@ jobs:
         run: pnpm exec playwright install-deps chromium firefox webkit
 
       - name: Build (needed for E2E fixture to load dist/)
-        run: pnpm build
+        run: pnpm turbo run build
 
       - name: E2E tests
-        run: pnpm test:e2e
+        run: pnpm turbo run test:e2e
