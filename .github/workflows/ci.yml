@@ -87,11 +87,11 @@ jobs:
 
       - name: Install Playwright browsers (cache miss)
         if: steps.playwright-cache.outputs.cache-hit != 'true'
-        run: pnpm exec playwright install --with-deps chromium firefox webkit
+        run: pnpm --filter=./packages/core exec playwright install --with-deps chromium firefox webkit
 
       - name: Install Playwright system deps (cache hit)
         if: steps.playwright-cache.outputs.cache-hit == 'true'
-        run: pnpm exec playwright install-deps chromium firefox webkit
+        run: pnpm --filter=./packages/core exec playwright install-deps chromium firefox webkit
 
       - name: Build (needed for E2E fixture to load dist/)
         run: pnpm turbo run build
