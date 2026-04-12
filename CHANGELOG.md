@@ -1,5 +1,13 @@
 # @ngockhoi96/ctc
 
+## 0.2.1
+
+### Patch Changes
+
+- [`0bd932f`](https://github.com/anIcedAntFA/ctc/commit/0bd932f42494f2a2f802c7d1aa650fab9b9d4ea0) Thanks [@anIcedAntFA](https://github.com/anIcedAntFA)! - Fix `exports` map missing `types` condition for TypeScript consumers.
+
+  TypeScript consumers using `moduleResolution: nodenext` or `bundler` now correctly resolve declarations via the `"types"` condition in the `exports` map for both the root `"."` and `"./clipboard"` subpath, instead of falling back to the CJS `.d.cts` file.
+
 ## 0.2.0
 
 ### Minor Changes
