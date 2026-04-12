@@ -36,7 +36,12 @@
 	},
 	"overrides": [
 		{
-			"includes": ["*.config.ts", "*.config.js"],
+			"includes": [
+				"*.config.ts",
+				"*.config.js",
+				"packages/*/*.config.ts",
+				"packages/*/*.config.js"
+			],
 			"linter": {
 				"rules": {
 					"style": {
@@ -49,9 +54,14 @@
 	"files": {
 		"includes": [
 			"src/**",
+			"packages/*/src/**",
+			"packages/*/tests/**",
 			"*.config.ts",
 			"*.config.js",
+			"packages/*/*.config.ts",
+			"packages/*/*.config.js",
 			"*.json",
+			"packages/*/*.json",
 			"!!**/dist/",
 			"!!**/node_modules/",
 			"!!**/.changeset/"

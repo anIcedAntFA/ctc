@@ -39,7 +39,10 @@ test.describe('copyToClipboard', () => {
 		browserName,
 	}) => {
 		// Requires clipboard-read permission — only Chromium accepts this in Playwright contextOptions
-		test.skip(skipReadPermission({ browserName }), 'clipboard-read permission not supported')
+		test.skip(
+			skipReadPermission({ browserName }),
+			'clipboard-read permission not supported',
+		)
 		await page.evaluate(() =>
 			window.__clipboard.copyToClipboard('verify-content-123'),
 		)
@@ -55,11 +58,12 @@ test.describe('readFromClipboard', () => {
 		browserName,
 	}) => {
 		// Requires clipboard-read permission — only Chromium accepts this in Playwright contextOptions
-		test.skip(skipReadPermission({ browserName }), 'clipboard-read permission not supported')
-		// Write text first via native clipboard API
-		await page.evaluate(() =>
-			navigator.clipboard.writeText('read-test-abc'),
+		test.skip(
+			skipReadPermission({ browserName }),
+			'clipboard-read permission not supported',
 		)
+		// Write text first via native clipboard API
+		await page.evaluate(() => navigator.clipboard.writeText('read-test-abc'))
 		const result = await page.evaluate(() =>
 			window.__clipboard.readFromClipboard(),
 		)
@@ -68,7 +72,10 @@ test.describe('readFromClipboard', () => {
 
 	test('returns string type on success', async ({ page, browserName }) => {
 		// Requires clipboard-read permission — only Chromium accepts this in Playwright contextOptions
-		test.skip(skipReadPermission({ browserName }), 'clipboard-read permission not supported')
+		test.skip(
+			skipReadPermission({ browserName }),
+			'clipboard-read permission not supported',
+		)
 		await page.evaluate(() => navigator.clipboard.writeText('type-test'))
 		const result = await page.evaluate(() =>
 			window.__clipboard.readFromClipboard(),

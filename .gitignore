@@ -6,6 +6,7 @@ coverage/
 .DS_Store
 test-results/
 playwright-report/
+.turbo
 
 doc-local
 .claude

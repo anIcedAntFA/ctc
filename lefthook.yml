@@ -10,7 +10,7 @@ pre-commit:
     typecheck:
       run: pnpm tsc --noEmit
     test:
-      run: pnpm vitest run --passWithNoTests
+      run: pnpm test
       glob: "*.{ts,js}"
 
 commit-msg:

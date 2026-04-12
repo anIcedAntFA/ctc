@@ -130,9 +130,7 @@ describe('readFromClipboard', () => {
 				throw new Error('boom')
 			})
 
-			await expect(
-				readFromClipboard({ onError }),
-			).resolves.toBeNull()
+			await expect(readFromClipboard({ onError })).resolves.toBeNull()
 		})
 	})
 })

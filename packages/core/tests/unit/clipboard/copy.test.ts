@@ -151,9 +151,7 @@ describe('copyToClipboard', () => {
 				throw new Error('boom')
 			})
 
-			await expect(
-				copyToClipboard('hello', { onError }),
-			).resolves.toBe(false)
+			await expect(copyToClipboard('hello', { onError })).resolves.toBe(false)
 		})
 	})
 })
