@@ -53,25 +53,51 @@ Requirements for v0.1.0 release. Each maps to roadmap phases.
 
 ## v2 Requirements
 
-Deferred to future release. Tracked but not in current roadmap.
+Requirements for v0.3.0 milestone. Each maps to roadmap phases 4–8.
 
-### Rich Content
+### Monorepo Foundation
 
-- **RICH-01**: Copy rich content (HTML/images) via `copyRichContent()`
-- **RICH-02**: Read rich content via `readRichContent()`
-
-### Node.js Support
-
-- **NODE-01**: Node.js clipboard support (system clipboard via platform commands)
+- [ ] **MONO-01**: Repo converted to pnpm workspaces with `packages/` and `apps/` directories
+- [ ] **MONO-02**: Turborepo pipeline orchestrates build, test, and lint tasks across all packages
+- [ ] **MONO-03**: Core clipboard code lives in `packages/core` and continues to publish as `@ngockhoi96/ctc`
+- [ ] **MONO-04**: Shared TypeScript config (`tsconfig.base.json`) and Biome config at root; packages extend them
+- [ ] **MONO-05**: Changesets configured for independent multi-package versioning
 
 ### Framework Adapters
 
-- **ADAPT-01**: React hook `useCopyToClipboard()`
-- **ADAPT-02**: Vue composable `useCopyToClipboard()`
+- [ ] **ADAPT-01**: `@ngockhoi96/ctc-react` — `useCopyToClipboard(text?, options?)` React hook returning `{ copy, copied, error }`; `copied` auto-resets after configurable timeout (default 2s)
+- [ ] **ADAPT-02**: `@ngockhoi96/ctc-vue` — `useCopyToClipboard(text?, options?)` Vue 3 composable returning `{ copy, copied, error }` as refs; `copied` auto-resets
+- [ ] **ADAPT-03**: `@ngockhoi96/ctc-svelte` — Svelte action `copyAction(node, text)` for DOM integration + `useCopyToClipboard()` rune/store returning `{ copy, copied, error }`; `copied` auto-resets
+- [ ] **ADAPT-04**: All adapters declare `@ngockhoi96/ctc` as a peer dependency; ship zero runtime deps of their own
+- [ ] **ADAPT-05**: All adapters have unit tests — React Testing Library, Vue Test Utils, Svelte Testing Library
+- [ ] **ADAPT-06**: All adapters published as separate public npm packages with ESM + CJS + `.d.ts`
 
-### Documentation
+### Playgrounds
 
-- **DOCS-01**: VitePress documentation site with guides, API docs, examples
+- [ ] **PLAY-00**: `playground/vanilla` — framework-free Vite app demonstrating all core functions; doubles as E2E fixture; shows copy button, copied state, error display, secure context badge, and detection panel
+- [ ] **PLAY-01**: `playground/react` — Vite + React app demonstrating `useCopyToClipboard` with copy button, copied state, error display, and timeout reset
+- [ ] **PLAY-02**: `playground/vue` — Vite + Vue app demonstrating `useCopyToClipboard` composable
+- [ ] **PLAY-03**: `playground/svelte` — Vite + Svelte app demonstrating both action and rune patterns side-by-side
+
+### Documentation & Release Infrastructure
+
+- [ ] **DX-05**: Root README updated for monorepo structure with links to each package
+- [ ] **DX-06**: Per-package README for each adapter (`packages/react`, `packages/vue`, `packages/svelte`)
+- [ ] **DX-07**: `CONTRIBUTING.md` with monorepo workflow (setup, adding packages, running tests, release process)
+- [ ] **DX-08**: `SECURITY.md` with vulnerability reporting process
+- [ ] **DX-09**: GitHub PR template + issue templates (feature request, bug report)
+- [ ] **DX-10**: Emoji icons in changeset summaries; `.changeset/config.json` schema warning resolved
+
+## Deferred
+
+Explicitly deferred. Tracked but not in any active roadmap.
+
+| Requirement | Deferred Until | Reason |
+|-------------|---------------|--------|
+| RICH-01: `copyRichContent()` | v0.4.0+ | API design needs more research (Clipboard Item, MIME types) |
+| RICH-02: `readRichContent()` | v0.4.0+ | Same as RICH-01 |
+| NODE-01: Node.js clipboard | v0.4.0+ | Needs platform-specific commands (pbcopy/xclip/clip); different scope |
+| DOCS-01: VitePress site | v0.4.0+ | README sufficient until API stabilises across all adapters |
 
 ## Out of Scope
 
@@ -82,16 +108,14 @@ Explicitly excluded. Documented to prevent scope creep.
 | Transparent/auto execCommand fallback | Keeps modern API clean; fallback is explicit separate function |
 | Polyfills for legacy browsers | Document limitations instead |
 | CLI tool | No need identified |
-| Vite playground | Rely on unit/E2E tests for v0.1.0 |
 | clipboardchange events | Unstable spec, no cross-browser support |
 | Clipboard polling | Anti-pattern, use events instead |
 | Built-in copy UI components | Library, not UI kit |
-| Automatic permission management | Respect browser security model, document limitations |
+| Automatic permission management | Respect browser security model |
 | Paste event handling | Different concern — DOM events, not Clipboard API |
+| Monorepo build caching service (Nx Cloud / Turbo Remote) | Overkill for this scale; local cache sufficient |
 
 ## Traceability
-
-Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
@@ -118,12 +142,33 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CI-02 | Phase 3 | Complete |
 | CI-03 | Phase 3 | Complete |
 | DX-03 | Phase 3 | Complete |
+| MONO-01 | Phase 4 | Planned |
+| MONO-02 | Phase 4 | Planned |
+| MONO-03 | Phase 4 | Planned |
+| MONO-04 | Phase 4 | Planned |
+| MONO-05 | Phase 4 | Planned |
+| ADAPT-01 | Phase 5 | Planned |
+| ADAPT-02 | Phase 5 | Planned |
+| ADAPT-04 | Phase 5 | Planned |
+| ADAPT-05 | Phase 5 | Planned |
+| ADAPT-06 | Phase 5 | Planned |
+| ADAPT-03 | Phase 6 | Planned |
+| PLAY-00 | Phase 7 | Planned |
+| PLAY-01 | Phase 7 | Planned |
+| PLAY-02 | Phase 7 | Planned |
+| PLAY-03 | Phase 7 | Planned |
+| DX-05 | Phase 8 | Planned |
+| DX-06 | Phase 8 | Planned |
+| DX-07 | Phase 8 | Planned |
+| DX-08 | Phase 8 | Planned |
+| DX-09 | Phase 8 | Planned |
+| DX-10 | Phase 8 | Planned |
 
 **Coverage:**
-- v1 requirements: 23 total
-- Mapped to phases: 23
+- v1 requirements: 23 total — all complete
+- v2 requirements: 21 total — 0 complete
 - Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-08*
-*Last updated: 2026-04-08 after roadmap creation*
+*Last updated: 2026-04-13 — v2 requirements added for v0.3.0 milestone*

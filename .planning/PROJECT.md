@@ -2,11 +2,11 @@
 
 ## What This Is
 
-A modular, tree-shakeable browser utilities library starting with clipboard operations. Framework-agnostic core with zero dependencies, designed to scale into storage, media, DOM, and other browser APIs over time. Published as `@ngockhoi96/ctc` on npm.
+A modular, tree-shakeable browser utilities library starting with clipboard operations. Framework-agnostic core with zero dependencies, plus framework adapters for React, Vue, and Svelte. Designed to scale into storage, media, DOM, and other browser APIs over time. Published as `@ngockhoi96/ctc` (core) and `@ngockhoi96/ctc-react` / `@ngockhoi96/ctc-vue` / `@ngockhoi96/ctc-svelte` on npm.
 
 ## Core Value
 
-Developers can copy, read, and detect clipboard support in any browser environment with a single import — no framework lock-in, no bloat, no surprises.
+Developers can copy, read, and detect clipboard support in any browser environment with a single import — no framework lock-in, no bloat, no surprises. Framework adapter packages add idiomatic hooks/composables/actions on top of the same zero-dependency core.
 
 ## Requirements
 
@@ -38,11 +38,8 @@ Developers can copy, read, and detect clipboard support in any browser environme
 
 ### Out of Scope
 
-- VitePress/Starlight documentation site — defer to v0.2.0+, README sufficient for v0.1.0
-- React hook (`useCopyToClipboard`) — Phase 2, v0.2.0+
-- Vue composable — Phase 2, v0.2.0+
-- Monorepo migration — only when framework adapters are needed
-- Vite playground/demo — rely on unit/E2E tests
+- VitePress/Starlight documentation site — defer to v0.4.0+, README sufficient until API stabilises across all adapters
+- Rich content clipboard (`copyRichContent`, `readRichContent`) — defer to v0.4.0+, needs Clipboard Item API design
 - Server-side / Node-only utilities — browser-only library
 - Polyfills for legacy browsers — document limitations instead
 - CLI tool — no real need identified
