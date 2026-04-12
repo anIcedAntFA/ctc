@@ -4,6 +4,10 @@
 	"license": "MIT",
 	"type": "module",
 	"description": "Modular, tree-shakeable browser utilities library",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/anIcedAntFA/ctc.git"
+	},
 	"sideEffects": false,
 	"engines": {
 		"node": ">=20"
