@@ -1,0 +1,75 @@
+{
+	"name": "@ngockhoi96/ctc",
+	"version": "0.2.1",
+	"license": "MIT",
+	"type": "module",
+	"private": false,
+	"description": "Modular, tree-shakeable browser utilities library",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/anIcedAntFA/ctc.git"
+	},
+	"sideEffects": false,
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"build": "tsdown",
+		"lint": "biome check",
+		"lint:fix": "biome check --fix",
+		"format": "biome format --write",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"test:e2e": "playwright test",
+		"typecheck": "tsc --noEmit",
+		"size": "size-limit",
+		"validate": "publint && attw --pack"
+	},
+	"files": [
+		"dist"
+	],
+	"size-limit": [
+		{
+			"path": "dist/index.mjs",
+			"limit": "1 KB"
+		},
+		{
+			"path": "dist/clipboard/index.mjs",
+			"limit": "1 KB"
+		}
+	],
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.cts",
+	"typesVersions": {
+		"*": {
+			"clipboard": [
+				"./dist/clipboard/index.d.cts"
+			]
+		}
+	},
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs"
+		},
+		"./clipboard": {
+			"import": "./dist/clipboard/index.mjs",
+			"require": "./dist/clipboard/index.cjs"
+		},
+		"./package.json": "./package.json"
+	},
+	"devDependencies": {
+		"@arethetypeswrong/cli": "0.18.2",
+		"@playwright/test": "^1.59.1",
+		"@size-limit/file": "12.0.1",
+		"@types/node": "^25.6.0",
+		"@vitest/coverage-v8": "4.1.3",
+		"http-server": "^14.1.1",
+		"publint": "0.3.18",
+		"size-limit": "12.0.1",
+		"tsdown": "0.21.7",
+		"typescript": "6.0.2",
+		"vitest": "4.1.3"
+	}
+}

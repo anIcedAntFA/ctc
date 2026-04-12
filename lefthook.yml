@@ -8,9 +8,9 @@ pre-commit:
       run: pnpm biome format --no-errors-on-unmatched {staged_files}
       glob: "*.{ts,js,json}"
     typecheck:
-      run: pnpm tsc --noEmit
+      run: pnpm turbo run typecheck
     test:
-      run: pnpm vitest run --passWithNoTests
+      run: pnpm --filter=./packages/core exec vitest run --passWithNoTests
       glob: "*.{ts,js}"
 
 commit-msg:
@@ -21,8 +21,8 @@ commit-msg:
 pre-push:
   commands:
     build:
-      run: pnpm build
+      run: pnpm turbo run build
     test:
-      run: pnpm test
+      run: pnpm turbo run test
     validate:
-      run: pnpm validate
+      run: pnpm turbo run validate
