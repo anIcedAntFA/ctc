@@ -1,0 +1,21 @@
+{
+  "name": "@ngockhoi96/playground-vue",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ngockhoi96/ctc": "workspace:*",
+    "@ngockhoi96/ctc-vue": "workspace:*"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "6.0.6",
+    "typescript": "6.0.2",
+    "vite": "8.0.8",
+    "vue": "^3.5.32"
+  }
+}
