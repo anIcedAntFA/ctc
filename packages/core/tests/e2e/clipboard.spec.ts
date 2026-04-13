@@ -13,7 +13,7 @@ declare global {
 }
 
 test.beforeEach(async ({ page }) => {
-	await page.goto('/tests/e2e/fixtures/')
+	await page.goto('/')
 	// Wait for the ESM module to load and expose __clipboard on window
 	await page.waitForFunction(() => typeof window.__clipboard !== 'undefined')
 })
