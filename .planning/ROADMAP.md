@@ -104,10 +104,10 @@ Plans:
 5. Playgrounds are `"private": true` — changesets never publishes them; CI filter excludes them
 
 Plans:
-- [ ] 07-01-PLAN.md — `playground/vanilla`: framework-free Vite app, doubles as E2E fixture replacement
-- [ ] 07-02-PLAN.md — `playground/react`: Vite + React app demoing `useCopyToClipboard` hook
-- [ ] 07-03-PLAN.md — `playground/vue`: Vite + Vue app demoing `useCopyToClipboard` composable
-- [ ] 07-04-PLAN.md — `playground/svelte`: Vite + Svelte app, action + rune side-by-side
+- [x] 07-01-PLAN.md — `playground/vanilla`: framework-free Vite app, doubles as E2E fixture replacement
+- [x] 07-02-PLAN.md — `playground/react`: Vite + React app demoing `useCopyToClipboard` hook
+- [x] 07-03-PLAN.md — `playground/vue`: Vite + Vue app demoing `useCopyToClipboard` composable
+- [x] 07-04-PLAN.md — `playground/svelte`: Vite + Svelte app, action + rune side-by-side
 
 ### Phase 8: Docs & Release Infrastructure
 **Goal**: Root and per-package documentation is complete, GitHub repo housekeeping is done, and the release workflow handles multi-package publishing correctly
