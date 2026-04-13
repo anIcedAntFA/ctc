@@ -69,7 +69,9 @@
 			"packages/*/*.json",
 			"!!**/dist/",
 			"!!**/node_modules/",
-			"!!**/.changeset/"
+			"!!**/.changeset/",
+			"!!**/*.vue",
+			"!!**/*.svelte"
 		]
 	}
 }
