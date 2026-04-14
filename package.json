@@ -13,6 +13,7 @@
 		"node": ">=20"
 	},
 	"scripts": {
+		"dev": "turbo run dev --filter=./playground/*",
 		"build": "turbo run build",
 		"lint": "turbo run lint",
 		"lint:fix": "pnpm --filter=./packages/core exec biome check --fix",

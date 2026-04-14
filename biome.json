@@ -40,7 +40,9 @@
 				"*.config.ts",
 				"*.config.js",
 				"packages/*/*.config.ts",
-				"packages/*/*.config.js"
+				"packages/*/*.config.js",
+				"playground/*/*.config.ts",
+				"playground/*/*.config.js"
 			],
 			"linter": {
 				"rules": {
@@ -60,11 +62,16 @@
 			"*.config.js",
 			"packages/*/*.config.ts",
 			"packages/*/*.config.js",
+			"playground/*/src/**",
+			"playground/*/*.config.ts",
+			"playground/*/*.config.js",
 			"*.json",
 			"packages/*/*.json",
 			"!!**/dist/",
 			"!!**/node_modules/",
-			"!!**/.changeset/"
+			"!!**/.changeset/",
+			"!!**/*.vue",
+			"!!**/*.svelte"
 		]
 	}
 }

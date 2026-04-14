@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions & Discussion
+    url: https://github.com/anIcedAntFA/ctc/discussions
+    about: For general questions or usage help, open a Discussion instead of an issue.

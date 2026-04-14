@@ -20,7 +20,8 @@ export default defineConfig({
 	retries: process.env.CI ? 1 : 0,
 	reporter: process.env.CI ? 'github' : 'list',
 	webServer: {
-		command: 'npx http-server . -p 8080 --silent --cors',
+		command:
+			'pnpm --filter=@ngockhoi96/playground-vanilla build && npx http-server ../../playground/vanilla/dist -p 8080 --silent --cors',
 		url: 'http://localhost:8080',
 		reuseExistingServer: !process.env.CI,
 	},

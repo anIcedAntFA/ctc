@@ -2,6 +2,7 @@
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
+		"types": ["node"],
 		"noEmit": true,
 		"isolatedDeclarations": false,
 		"declaration": false

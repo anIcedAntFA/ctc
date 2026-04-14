@@ -1,45 +1,54 @@
 ---
 gsd_state_version: 1.0
 milestone: v0.3.0
-milestone_name: framework-adapters
-status: planned
-stopped_at: Milestone initialized — ready to plan Phase 4
-last_updated: "2026-04-13T00:00:00.000Z"
-last_activity: 2026-04-13
+milestone_name: Monorepo + Framework Adapters
+status: complete
+stopped_at: ""
+last_updated: "2026-04-14T00:00:00.000Z"
+last_activity: 2026-04-14 -- v0.3.0 milestone complete
 progress:
   total_phases: 5
-  completed_phases: 0
-  total_plans: 11
-  completed_plans: 0
-  percent: 0
+  completed_phases: 5
+  total_plans: 13
+  completed_plans: 13
+  percent: 100
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-13)
+See: .planning/PROJECT.md (updated 2026-04-14)
 
 **Core value:** Developers can copy, read, and detect clipboard support in any browser environment with a single import — no framework lock-in, no bloat, no surprises. Framework adapter packages add idiomatic hooks/composables/actions on top of the same zero-dependency core.
-**Current focus:** Phase 4 — Monorepo Foundation (not yet started)
+**Current focus:** Planning next milestone (v0.4.0)
 
 ## Current Position
 
-Phase: 4 (monorepo-foundation) — PLANNED
-Plan: 0 of 2
-Status: Ready — run `/gsd-plan-phase 4` to begin
-Last activity: 2026-04-13
+Milestone v0.3.0 complete — shipped 2026-04-14.
 
-Progress: [----------] 0%
+All phases complete:
+- Phase 04: Monorepo Foundation ✓
+- Phase 05: React & Vue Adapters ✓
+- Phase 06: Svelte Adapter ✓
+- Phase 07: Playgrounds ✓
+- Phase 08: Docs & Release Infra ✓
 
-## Previous Milestone
+## Previous Milestones
 
 **v0.1.0** — Complete (2026-04-09)
 - Phase 1: Project Foundation ✓
 - Phase 2: Clipboard API ✓
 - Phase 3: Quality & Release ✓
 - Published to npm as `@ngockhoi96/ctc@0.2.0`
-- Patch `0.2.1` changeset queued (exports types condition fix)
+
+**v0.3.0** — Complete (2026-04-14)
+- Phase 4: Monorepo Foundation ✓
+- Phase 5: React & Vue Adapters ✓
+- Phase 6: Svelte Adapter ✓
+- Phase 7: Playgrounds ✓
+- Phase 8: Docs & Release Infra ✓
+- 4 packages published: @ngockhoi96/ctc, ctc-react, ctc-vue, ctc-svelte
 
 ## Performance Metrics
 
@@ -56,52 +65,44 @@ Progress: [----------] 0%
 | Phase 03 | P03 | 15s | 2 | 2 |
 | Phase 03 | P04 | 129s | 1 | 2 |
 
-*v0.3.0 metrics will populate as plans complete*
+**Velocity (v0.3.0 milestone):**
+
+| Phase | Plans | Timeline | Notes |
+|-------|-------|----------|-------|
+| Phase 04 | 2 | 2026-04-14 | Audit/gap-fill (Phase 7 pre-built scaffold) |
+| Phase 05 | 2 | 2026-04-13 | React + Vue adapters |
+| Phase 06 | 2 | 2026-04-13 | Svelte action + stores/runes |
+| Phase 07 | 4 | 2026-04-13 | Four playgrounds |
+| Phase 08 | 3 | 2026-04-14 | Docs + GitHub templates + formatter |
 
 ## Accumulated Context
 
-### Decisions
+### Key Decisions (carry forward)
 
-- [Phase 01]: tsconfig uses noEmit+allowImportingTsExtensions since tsdown handles all emit
-- [Phase 01]: typesVersions added for node10 fallback type resolution
-- [Phase 01]: tsdown exports:true auto-generates exports map on each build — manual exports edits are overwritten on build
-- [Phase 01]: Biome 2.x uses includes with negation patterns instead of deprecated ignore field
-- [Phase 01]: Pre-commit test uses --passWithNoTests to avoid failure before test files exist
-- [Phase 01]: Config files exempt from noDefaultExport via Biome overrides
-- [Phase 02]: EXPECTED_ERROR_CODES is unexported module-level Set — internal classification, not public API
-- [Phase 02]: Detection functions are pure with no side effects — no imports from errors.ts
-- [Phase 02]: Optional chaining navigator.clipboard?.writeText handles Chrome setting clipboard=undefined on HTTP
-- [Phase 02]: INSECURE_CONTEXT code used for isSecureContext() guard — distinguishes unsupported API from insecure environment
-- [Phase 02]: copyToClipboardLegacy has no isSecureContext() guard — intentional, works on HTTP by design
-- [Phase 02]: setSelectionRange(0, text.length) over textarea.select() for iOS Safari mobile selection reliability
-- [Phase 02]: Biome organize-imports requires type-first export ordering in barrel files
-- [Phase 03]: Stub all globals explicitly rather than relying on JSDOM — Vitest runs in Node by default
-- [Phase 03]: Console spies created in beforeEach not describe-level to survive vi.restoreAllMocks
-- [Phase 03]: README is self-contained API documentation — no separate docs site for v0.1.0
-- [Phase 03]: WebKit and Firefox don't accept clipboard-read/write in Playwright contextOptions — only Chromium supports explicit permission grants
-- [Phase 03]: E2E webServer serves project root so /dist/clipboard/index.mjs resolves correctly; tests navigate to /tests/e2e/fixtures/ explicitly
-- [Phase 03]: CI pipeline: lint-and-build gates unit-test and e2e-test jobs via needs
-- [Phase 03]: release.yml uses changesets/action@v1 with fetch-depth:0 and explicit write permissions
-- [v0.3.0 milestone]: Separate scoped packages — @ngockhoi96/ctc-react, @ngockhoi96/ctc-vue, @ngockhoi96/ctc-svelte
-- [v0.3.0 milestone]: pnpm workspaces + Turborepo; CI uses --filter=./packages/* to exclude playgrounds
-- [v0.3.0 milestone]: Hook/composable API: { copy, copied, error } — copied auto-resets after 2s (configurable)
-- [v0.3.0 milestone]: Svelte adapter ships both copyAction (use: directive) and useCopyToClipboard rune/store
-- [v0.3.0 milestone]: playground/ directory (not apps/); vanilla playground doubles as E2E fixture
-- [v0.3.0 milestone]: Playgrounds are workspace members, "private": true — changesets never publishes them
-- [v0.3.0 milestone]: useCopiedState 2s timer is local to each playground, not exported from adapter packages
-- [v0.3.0 milestone]: README-only docs — VitePress deferred to v0.4.0+
+- tsdown exports:true auto-generates exports map on each build — manual exports edits are overwritten on build
+- pnpm workspaces + Turborepo; CI uses --filter=./packages/* to exclude playgrounds
+- Adapter return type: { copy, copied, error, reset } — reset() is intentional addition beyond original spec
+- Svelte adapter ships /stores (Svelte 4+5) and /runes (Svelte 5) as subpath exports
+- playground/vanilla doubles as Playwright E2E fixture
+- Changesets in independent mode — mode: "independent" explicitly set in config.json (fixed after v0.3.0 audit)
+- VitePress docs deferred to v0.4.0+
 
 ### Pending Todos
 
-- Run `pnpm changeset version` to consume the 0.2.1 patch changeset before starting Phase 4
-- Verify tsdown exports:true behaviour in monorepo context (packages/core) before finalising Phase 4 plan
+None — milestone complete.
 
 ### Blockers/Concerns
 
 None.
 
+## Quick Tasks Completed
+
+| Date | Task | Output |
+|------|------|--------|
+| 2026-04-14 | Research npm publish flow + create publish guide | `doc-local/publish_guide.md` |
+
 ## Session Continuity
 
-Last session: 2026-04-13
-Stopped at: Milestone v0.3.0 initialized — REQUIREMENTS.md, ROADMAP.md, PROJECT.md, STATE.md updated
-Resume: Run `/gsd-plan-phase 4` to generate Phase 4 execution plan
+Last session: 2026-04-14
+Stopped at: v0.3.0 milestone complete — publish guide created
+Resume: First-publish 3 adapter packages (see doc-local/publish_guide.md §5), then run `/gsd-new-milestone` to plan v0.4.0

@@ -1,0 +1,69 @@
+{
+	"name": "@ngockhoi96/ctc-react",
+	"version": "0.0.1",
+	"license": "MIT",
+	"type": "module",
+	"private": false,
+	"description": "React hook for @ngockhoi96/ctc clipboard utilities",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/anIcedAntFA/ctc.git",
+		"directory": "packages/react"
+	},
+	"sideEffects": false,
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"build": "tsdown",
+		"lint": "biome check",
+		"lint:fix": "biome check --fix",
+		"format": "biome format --write",
+		"test": "vitest run",
+		"test:watch": "vitest",
+		"typecheck": "tsc --noEmit",
+		"size": "size-limit",
+		"validate": "publint && attw --pack"
+	},
+	"files": [
+		"dist"
+	],
+	"size-limit": [
+		{
+			"path": "dist/index.mjs",
+			"limit": "2 KB"
+		}
+	],
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.mjs",
+	"types": "./dist/index.d.cts",
+	"peerDependencies": {
+		"@ngockhoi96/ctc": "workspace:*",
+		"react": ">=18 <20",
+		"react-dom": ">=18 <20"
+	},
+	"devDependencies": {
+		"@ngockhoi96/ctc": "workspace:*",
+		"@arethetypeswrong/cli": "0.18.2",
+		"@size-limit/file": "12.0.1",
+		"@testing-library/react": "^16.3.2",
+		"@types/react": "^18.0.0",
+		"@types/react-dom": "^18.0.0",
+		"@vitest/coverage-v8": "4.1.3",
+		"jsdom": "^26.0.0",
+		"publint": "0.3.18",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"size-limit": "12.0.1",
+		"tsdown": "0.21.7",
+		"typescript": "6.0.2",
+		"vitest": "4.1.3"
+	},
+	"exports": {
+		".": {
+			"import": "./dist/index.mjs",
+			"require": "./dist/index.cjs"
+		},
+		"./package.json": "./package.json"
+	}
+}
