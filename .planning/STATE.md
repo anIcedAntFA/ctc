@@ -95,8 +95,14 @@ None — milestone complete.
 
 None.
 
+## Quick Tasks Completed
+
+| Date | Task | Output |
+|------|------|--------|
+| 2026-04-14 | Research npm publish flow + create publish guide | `doc-local/publish_guide.md` |
+
 ## Session Continuity
 
 Last session: 2026-04-14
-Stopped at: v0.3.0 milestone complete
-Resume: Run `/gsd-new-milestone` to plan v0.4.0
+Stopped at: v0.3.0 milestone complete — publish guide created
+Resume: First-publish 3 adapter packages (see doc-local/publish_guide.md §5), then run `/gsd-new-milestone` to plan v0.4.0
