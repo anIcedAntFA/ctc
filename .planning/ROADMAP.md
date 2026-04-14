@@ -122,8 +122,9 @@ Plans:
 6. Changeset summaries include emoji category prefixes; schema warning resolved
 
 Plans:
-- [ ] 08-01-PLAN.md — Root README + per-package READMEs (react, vue, svelte)
-- [ ] 08-02-PLAN.md — CONTRIBUTING.md, SECURITY.md, GitHub templates, changeset emoji config
+- [ ] 08-01-PLAN.md — Hub-style root README + new packages/core/README.md
+- [ ] 08-02-PLAN.md — CONTRIBUTING.md + SECURITY.md + GitHub PR/issue templates
+- [ ] 08-03-PLAN.md — Changeset emoji formatter + config pin + adapter README audit
 
 ---
 
@@ -138,6 +139,6 @@ Plans:
 | 5. React & Vue Adapters | 0/2 | Planned | — |
 | 6. Svelte Adapter | 0/1 | Planned | — |
 | 7. Playgrounds | 0/4 | Planned | — |
-| 8. Docs & Release Infra | 0/2 | Planned | — |
+| 8. Docs & Release Infra | 0/3 | Planned | — |
 
-**v0.3.0 total:** 0/11 plans complete
+**v0.3.0 total:** 0/12 plans complete
