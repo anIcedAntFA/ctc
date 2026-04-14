@@ -208,34 +208,14 @@ describe('useCopyToClipboard', () => {
 	})
 
 	describe('error handling', () => {
-		it('returns false and sets error when text is undefined at both sites (D-02)', async () => {
+		it('throws TypeError when text is undefined at both init and call-site (D-02)', async () => {
 			const { result } = renderHook(() => useCopyToClipboard())
 
-			let returnValue: boolean | undefined
-			await act(async () => {
-				returnValue = await result.current.copy()
-			})
-
-			expect(returnValue).toBe(false)
-			expect(result.current.copied).toBe(false)
-			expect(result.current.error).not.toBeNull()
-			expect(result.current.error?.code).toBe('CLIPBOARD_NOT_SUPPORTED')
-		})
-
-		it('calls onError callback when text is undefined at both sites', async () => {
-			const onError = vi.fn()
-			const { result } = renderHook(() =>
-				useCopyToClipboard(undefined, { onError }),
-			)
-
-			await act(async () => {
-				await result.current.copy()
-			})
-
-			expect(onError).toHaveBeenCalledOnce()
-			expect(onError).toHaveBeenCalledWith(
-				expect.objectContaining({ code: 'CLIPBOARD_NOT_SUPPORTED' }),
-			)
+			await expect(
+				act(async () => {
+					await result.current.copy()
+				}),
+			).rejects.toThrow(TypeError)
 		})
 
 		it('sets error and keeps copied=false when clipboard write fails', async () => {
@@ -275,8 +255,11 @@ describe('useCopyToClipboard', () => {
 		})
 
 		it('clears error to null at start of next copy() call (D-07)', async () => {
-			// First call: no text — sets error
-			const { result } = renderHook(() => useCopyToClipboard())
+			// First call: write fails — sets error
+			mock.writeText.mockRejectedValue(
+				new DOMException('Permission denied', 'NotAllowedError'),
+			)
+			const { result } = renderHook(() => useCopyToClipboard('hello'))
 
 			await act(async () => {
 				await result.current.copy()
@@ -286,7 +269,7 @@ describe('useCopyToClipboard', () => {
 			// Second call with text — error must be null before the attempt
 			mock.writeText.mockResolvedValue(undefined)
 			await act(async () => {
-				await result.current.copy('hello')
+				await result.current.copy()
 			})
 			expect(result.current.error).toBeNull()
 			expect(result.current.copied).toBe(true)

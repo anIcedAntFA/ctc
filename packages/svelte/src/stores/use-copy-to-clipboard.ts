@@ -75,13 +75,9 @@ export function useCopyToClipboard(
 
 		// D-19: no text at either init or call-site — programmer error.
 		if (text === undefined) {
-			const err: BrowserUtilsError = {
-				code: 'CLIPBOARD_NOT_SUPPORTED',
-				message: 'No text provided to copy. Pass text at init or call-site.',
-			}
-			errorW.set(err)
-			options?.onError?.(err)
-			return false
+			throw new TypeError(
+				'[ctc] useCopyToClipboard: no text provided. Pass text at init or call-site.',
+			)
 		}
 
 		// Clear error before each attempt.

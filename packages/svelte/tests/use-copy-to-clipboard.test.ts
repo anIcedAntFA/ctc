@@ -155,36 +155,23 @@ describe('useCopyToClipboard — /stores', () => {
 	})
 
 	describe('error handling', () => {
-		it('returns false and sets CLIPBOARD_NOT_SUPPORTED error when text is undefined (D-19)', async () => {
-			const { copy, copied, error } = useStores()
+		it('throws TypeError when text is undefined at both init and call-site (D-19)', async () => {
+			const { copy } = useStores()
 
-			const result = await copy()
-
-			expect(result).toBe(false)
-			expect(get(copied)).toBe(false)
-			expect(get(error)?.code).toBe('CLIPBOARD_NOT_SUPPORTED')
-		})
-
-		it('invokes onError when text is undefined', async () => {
-			const onError = vi.fn()
-			const { copy } = useStores(undefined, { onError })
-
-			await copy()
-
-			expect(onError).toHaveBeenCalledOnce()
-			expect(onError).toHaveBeenCalledWith(
-				expect.objectContaining({ code: 'CLIPBOARD_NOT_SUPPORTED' }),
-			)
+			await expect(copy()).rejects.toThrow(TypeError)
 		})
 
 		it('clears error to null at the start of the next copy() call', async () => {
-			const { copy, error } = useStores()
+			mock.writeText.mockRejectedValue(
+				new DOMException('Permission denied', 'NotAllowedError'),
+			)
+			const { copy, error } = useStores('hello')
 
 			await copy()
 			expect(get(error)).not.toBeNull()
 
 			mock.writeText.mockResolvedValue(undefined)
-			await copy('hello')
+			await copy()
 			expect(get(error)).toBeNull()
 		})
 
@@ -344,39 +331,24 @@ describe('useCopyToClipboard — /runes', () => {
 	})
 
 	describe('error handling', () => {
-		it('returns false and sets CLIPBOARD_NOT_SUPPORTED error when text is undefined (D-19)', async () => {
+		it('throws TypeError when text is undefined at both init and call-site (D-19)', async () => {
 			const { api } = renderRunes()
 
-			const result = await api.copy()
-			flushSync()
-
-			expect(result).toBe(false)
-			expect(api.copied).toBe(false)
-			expect(api.error?.code).toBe('CLIPBOARD_NOT_SUPPORTED')
-		})
-
-		it('invokes onError when text is undefined', async () => {
-			const onError = vi.fn()
-			const { api } = renderRunes(undefined, { onError })
-
-			await api.copy()
-			flushSync()
-
-			expect(onError).toHaveBeenCalledOnce()
-			expect(onError).toHaveBeenCalledWith(
-				expect.objectContaining({ code: 'CLIPBOARD_NOT_SUPPORTED' }),
-			)
+			await expect(api.copy()).rejects.toThrow(TypeError)
 		})
 
 		it('clears error to null at the start of the next copy() call', async () => {
-			const { api } = renderRunes()
+			mock.writeText.mockRejectedValue(
+				new DOMException('Permission denied', 'NotAllowedError'),
+			)
+			const { api } = renderRunes('hello')
 
 			await api.copy()
 			flushSync()
 			expect(api.error).not.toBeNull()
 
 			mock.writeText.mockResolvedValue(undefined)
-			await api.copy('hello')
+			await api.copy()
 			flushSync()
 			expect(api.error).toBeNull()
 		})
