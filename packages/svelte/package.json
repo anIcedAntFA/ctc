@@ -25,9 +25,6 @@
 		"size": "size-limit",
 		"validate": "publint && attw --pack --profile node16"
 	},
-	"files": [
-		"dist"
-	],
 	"size-limit": [
 		{
 			"path": "dist/index.mjs",
@@ -58,17 +55,36 @@
 	},
 	"exports": {
 		".": {
+			"types": {
+				"import": "./dist/index.d.mts",
+				"require": "./dist/index.d.cts"
+			},
+			"svelte": "./dist/index.mjs",
 			"import": "./dist/index.mjs",
 			"require": "./dist/index.cjs"
 		},
 		"./runes": {
+			"types": {
+				"import": "./dist/runes.d.mts",
+				"require": "./dist/runes.d.cts"
+			},
+			"svelte": "./src/runes/use-copy-to-clipboard.svelte.ts",
 			"import": "./dist/runes.mjs",
 			"require": "./dist/runes.cjs"
 		},
 		"./stores": {
+			"types": {
+				"import": "./dist/stores.d.mts",
+				"require": "./dist/stores.d.cts"
+			},
+			"svelte": "./dist/stores.mjs",
 			"import": "./dist/stores.mjs",
 			"require": "./dist/stores.cjs"
 		},
 		"./package.json": "./package.json"
-	}
+	},
+	"files": [
+		"dist",
+		"src/runes"
+	]
 }
