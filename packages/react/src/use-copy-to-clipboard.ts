@@ -100,7 +100,10 @@ export function useCopyToClipboard(
 			}
 
 			const success = await copyToClipboard(text, {
-				onError: options?.onError,
+				onError: (err) => {
+					setError(err)
+					options?.onError?.(err)
+				},
 			})
 
 			if (success) {

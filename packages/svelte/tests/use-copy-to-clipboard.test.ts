@@ -193,13 +193,25 @@ describe('useCopyToClipboard — /stores', () => {
 				new DOMException('Permission denied', 'NotAllowedError'),
 			)
 			const onError = vi.fn()
-			const { copy, copied } = useStores('hello', { onError })
+			const { copy, copied, error } = useStores('hello', { onError })
 
 			const result = await copy()
 
 			expect(result).toBe(false)
 			expect(get(copied)).toBe(false)
+			expect(get(error)).not.toBeNull()
 			expect(onError).toHaveBeenCalledOnce()
+		})
+
+		it('sets error state when writeText rejects without onError callback', async () => {
+			mock.writeText.mockRejectedValue(
+				new DOMException('Permission denied', 'NotAllowedError'),
+			)
+			const { copy, error } = useStores('hello')
+
+			await copy()
+
+			expect(get(error)).not.toBeNull()
 		})
 	})
 })
@@ -381,7 +393,20 @@ describe('useCopyToClipboard — /runes', () => {
 
 			expect(result).toBe(false)
 			expect(api.copied).toBe(false)
+			expect(api.error).not.toBeNull()
 			expect(onError).toHaveBeenCalledOnce()
+		})
+
+		it('sets error state when writeText rejects without onError callback', async () => {
+			mock.writeText.mockRejectedValue(
+				new DOMException('Permission denied', 'NotAllowedError'),
+			)
+			const { api } = renderRunes('hello')
+
+			await api.copy()
+			flushSync()
+
+			expect(api.error).not.toBeNull()
 		})
 	})
 

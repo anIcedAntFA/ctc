@@ -251,8 +251,7 @@ describe('useCopyToClipboard', () => {
 			})
 
 			expect(result.current.copied).toBe(false)
-			// copyToClipboard from core returns false and calls onError — error state
-			// is only populated via onError callback. Without onError, error stays null.
+			expect(result.current.error).not.toBeNull()
 		})
 
 		it('calls onError and populates error when clipboard write fails', async () => {
@@ -271,6 +270,7 @@ describe('useCopyToClipboard', () => {
 			})
 
 			expect(result.current.copied).toBe(false)
+			expect(result.current.error).not.toBeNull()
 			expect(onError).toHaveBeenCalledOnce()
 		})
 

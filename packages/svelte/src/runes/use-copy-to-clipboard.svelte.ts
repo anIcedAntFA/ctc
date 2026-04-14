@@ -101,7 +101,12 @@ export function useCopyToClipboard(
 			timer = null
 		}
 
-		const success = await copyToClipboard(text, { onError: options?.onError })
+		const success = await copyToClipboard(text, {
+			onError: (err) => {
+				state.error = err
+				options?.onError?.(err)
+			},
+		})
 
 		if (success) {
 			state.copied = true
