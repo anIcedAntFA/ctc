@@ -234,6 +234,12 @@ Browser support is determined by `@ngockhoi96/ctc` core. Requires:
 See [`@ngockhoi96/ctc` browser support](https://github.com/anIcedAntFA/ctc#browser-support)
 for details.
 
+## See also
+
+- [`@ngockhoi96/ctc`](../core/README.md) — core clipboard utilities (framework-agnostic)
+- [`@ngockhoi96/ctc-react`](../react/README.md) — React hook
+- [`@ngockhoi96/ctc-vue`](../vue/README.md) — Vue 3 composable
+
 ## License
 
 MIT

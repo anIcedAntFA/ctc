@@ -191,6 +191,12 @@ The composable is SSR-safe. In non-browser environments (Nuxt SSR, Node.js):
 - `copied.value` and `error.value` remain in their initial state
 - `onUnmounted` is a no-op on the server — no timer cleanup issues
 
+## See also
+
+- [`@ngockhoi96/ctc`](../core/README.md) — core clipboard utilities (framework-agnostic)
+- [`@ngockhoi96/ctc-react`](../react/README.md) — React hook
+- [`@ngockhoi96/ctc-svelte`](../svelte/README.md) — Svelte action + composable
+
 ## License
 
 MIT

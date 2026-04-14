@@ -180,6 +180,12 @@ const handleError = useCallback((err: BrowserUtilsError) => {
 const { copy } = useCopyToClipboard('text', { onError: handleError })
 ```
 
+## See also
+
+- [`@ngockhoi96/ctc`](../core/README.md) — core clipboard utilities (framework-agnostic)
+- [`@ngockhoi96/ctc-vue`](../vue/README.md) — Vue 3 composable
+- [`@ngockhoi96/ctc-svelte`](../svelte/README.md) — Svelte action + composable
+
 ## License
 
 MIT
