@@ -27,5 +27,5 @@
 
 > [!IMPORTANT]
 > If this PR introduces a **breaking change** or a **new feature**, run `pnpm changeset`
-> and commit the generated file. See [CONTRIBUTING.md](./CONTRIBUTING.md#creating-a-changeset)
+> and commit the generated file. See [CONTRIBUTING.md](../CONTRIBUTING.md#creating-a-changeset)
 > for bump-type guidance.

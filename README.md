@@ -4,7 +4,7 @@ Modular, tree-shakeable browser utilities monorepo. Core clipboard APIs plus idi
 
 [![npm version](https://img.shields.io/npm/v/@ngockhoi96/ctc)](https://www.npmjs.com/package/@ngockhoi96/ctc)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/@ngockhoi96/ctc)](https://bundlephobia.com/package/@ngockhoi96/ctc)
-[![CI](https://github.com/anIcedAntFA/cttc/actions/workflows/ci.yml/badge.svg)](https://github.com/anIcedAntFA/cttc/actions/workflows/ci.yml)
+[![CI](https://github.com/anIcedAntFA/ctc/actions/workflows/ci.yml/badge.svg)](https://github.com/anIcedAntFA/ctc/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > All functions are SSR-safe -- safe to import in Next.js, Nuxt, or any server-side environment without crashing.
