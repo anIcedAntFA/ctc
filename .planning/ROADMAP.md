@@ -60,8 +60,8 @@ Plans:
 5. CI workflow updated — monorepo-aware, passes on first run
 
 Plans:
-- [ ] 04-01-PLAN.md — pnpm workspaces init, Turborepo config, `packages/core` migration, shared tsconfig + biome
-- [ ] 04-02-PLAN.md — Changesets independent mode, CI monorepo update, root scripts
+- [x] 04-01-PLAN.md — pnpm workspaces init, Turborepo config, `packages/core` migration, shared tsconfig + biome
+- [x] 04-02-PLAN.md — Changesets independent mode, CI monorepo update, root scripts
 
 ### Phase 5: React & Vue Adapters
 **Goal**: `@ngockhoi96/ctc-react` and `@ngockhoi96/ctc-vue` are published packages with stateful hooks/composables, full unit tests, and per-package READMEs
