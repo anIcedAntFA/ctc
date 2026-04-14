@@ -122,9 +122,9 @@ Plans:
 6. Changeset summaries include emoji category prefixes; schema warning resolved
 
 Plans:
-- [ ] 08-01-PLAN.md — Hub-style root README + new packages/core/README.md
-- [ ] 08-02-PLAN.md — CONTRIBUTING.md + SECURITY.md + GitHub PR/issue templates
-- [ ] 08-03-PLAN.md — Changeset emoji formatter + config pin + adapter README audit
+- [x] 08-01-PLAN.md — Hub-style root README + new packages/core/README.md
+- [x] 08-02-PLAN.md — CONTRIBUTING.md + SECURITY.md + GitHub PR/issue templates
+- [x] 08-03-PLAN.md — Changeset emoji formatter + config pin + adapter README audit
 
 ---
 
