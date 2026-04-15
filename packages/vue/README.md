@@ -1,18 +1,23 @@
-# @ngockhoi96/ctc-vue
+# 💚 @ngockhoi96/ctc-vue
 
 Vue 3 composable for the [`@ngockhoi96/ctc`](https://github.com/anIcedAntFA/ctc) clipboard
 utilities library. Provides `useCopyToClipboard` with managed `copied` and `error` refs,
 configurable auto-reset timeout, and TypeScript-first API.
 
-## Install
+## 📦 Install
 
 ```bash
+# npm
 npm install @ngockhoi96/ctc-vue @ngockhoi96/ctc
-# or
+
+# pnpm
 pnpm add @ngockhoi96/ctc-vue @ngockhoi96/ctc
+
+# bun
+bun add @ngockhoi96/ctc-vue @ngockhoi96/ctc
 ```
 
-## Peer dependencies
+## 🔗 Peer dependencies
 
 | Package | Range |
 |---------|-------|

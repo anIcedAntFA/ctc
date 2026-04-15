@@ -1,19 +1,24 @@
-# @ngockhoi96/ctc-svelte
+# 🧡 @ngockhoi96/ctc-svelte
 
 Svelte action and reactive helpers for the [`@ngockhoi96/ctc`](https://github.com/anIcedAntFA/ctc)
 clipboard utilities library. Ships three exports: a `copyAction` for declarative `use:`
 buttons, plus a `useCopyToClipboard` helper available in two flavours — `svelte/store` for
 Svelte 4 + 5 compatibility and Svelte 5 runes (`$state` + `$effect`) for idiomatic Svelte 5.
 
-## Install
+## 📦 Install
 
 ```bash
+# npm
 npm install @ngockhoi96/ctc-svelte @ngockhoi96/ctc
-# or
+
+# pnpm
 pnpm add @ngockhoi96/ctc-svelte @ngockhoi96/ctc
+
+# bun
+bun add @ngockhoi96/ctc-svelte @ngockhoi96/ctc
 ```
 
-## Peer dependencies
+## 🔗 Peer dependencies
 
 | Package           | Range      |
 | ----------------- | ---------- |
