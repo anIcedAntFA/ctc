@@ -1,24 +1,28 @@
-# @ngockhoi96/ctc-react
+# ⚛️ @ngockhoi96/ctc-react
 
 React hook for the [`@ngockhoi96/ctc`](https://github.com/anIcedAntFA/ctc) clipboard
 utilities library. Provides `useCopyToClipboard` with managed `copied` and `error` state,
 configurable auto-reset timeout, and TypeScript-first API.
 
-## Install
+## 📦 Install
 
 ```bash
+# npm
 npm install @ngockhoi96/ctc-react @ngockhoi96/ctc
-# or
+
+# pnpm
 pnpm add @ngockhoi96/ctc-react @ngockhoi96/ctc
+
+# bun
+bun add @ngockhoi96/ctc-react @ngockhoi96/ctc
 ```
 
-## Peer dependencies
+## 🔗 Peer dependencies
 
 | Package | Range |
 |---------|-------|
 | `@ngockhoi96/ctc` | `>=0.1.0` |
 | `react` | `>=18 <20` |
-| `react-dom` | `>=18 <20` |
 
 ## Quick start
 

@@ -1,20 +1,20 @@
-# @ngockhoi96/ctc
+# 📋 @ngockhoi96/ctc
 
 Core clipboard utilities for the [`@ngockhoi96/ctc`](https://github.com/anIcedAntFA/ctc) library. Zero runtime dependencies, tree-shakeable, SSR-safe, framework-agnostic.
 
 > All functions are SSR-safe -- safe to import in Next.js, Nuxt, or any server-side environment without crashing.
 
-## Install
+## 📦 Install
 
 ```bash
-# pnpm
-pnpm add @ngockhoi96/ctc
-
 # npm
 npm install @ngockhoi96/ctc
 
-# yarn
-yarn add @ngockhoi96/ctc
+# pnpm
+pnpm add @ngockhoi96/ctc
+
+# bun
+bun add @ngockhoi96/ctc
 ```
 
 ## Quick Start

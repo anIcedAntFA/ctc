@@ -5,6 +5,7 @@
 	"type": "module",
 	"private": false,
 	"description": "Modular, tree-shakeable browser utilities library",
+	"homepage": "https://github.com/anIcedAntFA/ctc#readme",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/anIcedAntFA/ctc.git"

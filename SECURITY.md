@@ -1,6 +1,6 @@
-# Security Policy
+# 🔐 Security Policy
 
-## Supported Versions
+## 🛡️ Supported Versions
 
 Only the latest published version of each package receives security updates. Older
 versions are not patched.
@@ -12,7 +12,7 @@ versions are not patched.
 | `@ngockhoi96/ctc-vue`    | ✅ latest |
 | `@ngockhoi96/ctc-svelte` | ✅ latest |
 
-## Reporting a Vulnerability
+## 🚨 Reporting a Vulnerability
 
 **Please do NOT open a public GitHub issue for security reports.**
 
@@ -30,7 +30,7 @@ issue:
    - A proof-of-concept (if possible)
    - A suggested fix (if you have one)
 
-## What to expect
+## ⏱️ What to expect
 
 - You will receive an acknowledgment within **72 hours** of submission.
 - The maintainer will investigate and confirm the vulnerability privately.
@@ -39,7 +39,7 @@ issue:
 - Once a patch ships, the advisory is published and credit is given to the reporter
   (unless anonymity is requested).
 
-## Scope
+## 📦 Scope
 
 This policy covers the published npm packages in this repository:
 `@ngockhoi96/ctc`, `@ngockhoi96/ctc-react`, `@ngockhoi96/ctc-vue`, and

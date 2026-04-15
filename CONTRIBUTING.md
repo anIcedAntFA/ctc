@@ -1,16 +1,16 @@
-# Contributing
+# 🤝 Contributing
 
 Thanks for your interest in `@ngockhoi96/ctc`! This repo is a pnpm + Turborepo monorepo
 housing the core clipboard library and its framework adapters. Below is everything you
 need to set up, run tests, and ship a change.
 
-## Prerequisites
+## 🛠️ Prerequisites
 
 - **Node.js** >= 20 (see `.nvmrc` if present)
 - **pnpm** >= 10 (`npm i -g pnpm`)
 - **Git**
 
-## Setup
+## 🚀 Setup
 
 ```bash
 git clone https://github.com/anIcedAntFA/ctc.git
@@ -22,7 +22,7 @@ pnpm setup    # installs lefthook git hooks (pre-commit + commit-msg)
 After `pnpm setup`, every commit runs `pnpm lint` and `pnpm test` via lefthook, and
 commit messages are validated by commitlint.
 
-## Running tests
+## 🧪 Running tests
 
 From the repo root, all tasks are orchestrated by Turborepo:
 
@@ -43,7 +43,7 @@ pnpm --filter @ngockhoi96/ctc-svelte test
 pnpm --filter @ngockhoi96/ctc test:e2e
 ```
 
-## Adding a new package
+## 📁 Adding a new package
 
 1. Create `packages/<name>/` with `package.json`, `tsconfig.json`, and `tsdown.config.ts`.
    Copy the shape from an existing adapter (e.g. `packages/react/`) and adjust the
@@ -57,7 +57,7 @@ pnpm --filter @ngockhoi96/ctc test:e2e
 5. If the package is publishable, add it to `.changeset/config.json` workspace
    discovery (automatic for anything under `packages/`).
 
-## Creating a changeset
+## 📝 Creating a changeset
 
 Every PR that changes public API or observable behaviour needs a changeset:
 
@@ -83,7 +83,7 @@ The custom changelog formatter automatically prepends an emoji based on bump typ
 
 Commit the generated `.changeset/*.md` file alongside your code changes.
 
-## Release flow
+## 🚢 Release flow
 
 This repo uses [changesets](https://github.com/changesets/changesets) in **independent mode** — each package versions and publishes separately.
 
@@ -107,7 +107,7 @@ When in doubt about bump type, default to **patch** for any code change and **mi
 for any new exported function or option. Reserve **major** for removals or
 signature-breaking changes.
 
-## Code style
+## 🎨 Code style
 
 - **TypeScript strict** — no `any`, no `as` casts unless documented
 - **Named exports only** — no default exports (enforced by Biome)
@@ -124,12 +124,12 @@ signature-breaking changes.
 
   Types: `feat`, `fix`, `chore`, `docs`, `test`, `ci`, `refactor`, `perf`.
 
-## Security
+## 🔒 Security
 
 For vulnerability reports, see [SECURITY.md](./SECURITY.md). **Do not open a public
 issue for security concerns** — use GitHub's private vulnerability reporting.
 
-## Questions
+## 💬 Questions
 
 Open a [GitHub Discussion](https://github.com/anIcedAntFA/ctc/discussions) for general
 questions, or a bug/feature issue via the templates in the "New issue" chooser.
