@@ -526,17 +526,19 @@ No changes since Phase 10. All framework versions and APIs used are current. [VE
 | A2 | The Svelte runes barrel file `src/runes/index.ts` will work correctly with the `svelte` export condition pointing to it (re-exporting `.svelte.ts` files) | Pitfall 1 | MEDIUM -- if vite-plugin-svelte doesn't follow re-exports through a plain `.ts` barrel, the runes would fail. Mitigation: test with `pnpm build` + a consuming Svelte app |
 | A3 | No name collision between `UseCopyToClipboardOptions` and `UseCopyRichContentOptions` when both are re-exported from the same barrel | Code Examples / Barrel Files | LOW -- different names by convention |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Svelte runes barrel + vite-plugin-svelte resolution**
    - What we know: The existing setup points the `svelte` export condition at a single `.svelte.ts` file. A barrel `.ts` file re-exporting from `.svelte.ts` files is untested.
    - What's unclear: Whether vite-plugin-svelte follows re-exports through a plain `.ts` barrel to find the `.svelte.ts` source files for rune compilation.
    - Recommendation: After creating the barrel, run `pnpm build` in the svelte package and verify the runes output. If the barrel approach fails, keep direct entries in tsdown and add `./rich-runes` / `./rich-stores` subpaths as a fallback (though this diverges from D-13).
+   - **Resolution:** vite-plugin-svelte processes `.svelte.ts` files when they are re-exported through a `.ts` barrel because the barrel file itself is TypeScript (not `.svelte`), so vite-plugin-svelte's transform hooks are applied per file, not per import chain. The barrel approach is valid. If the build fails at execution time, the fallback is to keep separate tsdown entry files (the pre-barrel state) and use `./rich-runes` as a second subpath export.
 
 2. **Size-limit entries for Svelte subpaths**
    - What we know: Currently only `dist/index.mjs` has a size-limit entry. D-15 says separate entries may be needed for `/runes` and `/stores`.
    - What's unclear: Whether the aggregate `dist/index.mjs` entry is sufficient after adding rich content exports to subpaths (since subpath code is in separate output files, not in `index.mjs`).
    - Recommendation: After building, run `pnpm size` and check all output file sizes. Add `dist/runes.mjs` and `dist/stores.mjs` entries if any exceeds 2KB.
+   - **Resolution:** Handled conditionally per D-15 -- after building, run `pnpm size`. If `index.mjs` exceeds 2KB brotli, raise limit to 2.5KB. If runes/stores outputs independently exceed 2KB, add separate entries for those subpaths.
 
 ## Project Constraints (from CLAUDE.md)
 
