@@ -70,6 +70,13 @@ export function useCopyRichContent(
 	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 	const timeout = options?.timeout ?? 2000
 
+	// Stable ref for onError — avoids re-creating copyRich when consumer passes
+	// an inline arrow function as onError on every render.
+	const onErrorRef = useRef(options?.onError)
+	useEffect(() => {
+		onErrorRef.current = options?.onError
+	}, [options?.onError])
+
 	// Unmount cleanup — clears any pending auto-reset timer.
 	// This single empty-dep useEffect is ONLY for unmount cleanup.
 	// Timer set/clear logic lives inside copyRich() itself (avoids stale closure issues
@@ -105,7 +112,7 @@ export function useCopyRichContent(
 			const success = await copyRichContent(content, {
 				onError: (err) => {
 					setError(err)
-					options?.onError?.(err)
+					onErrorRef.current?.(err)
 				},
 			})
 
@@ -124,9 +131,9 @@ export function useCopyRichContent(
 
 			return success
 		},
-		// options?.onError is captured — consumers should memoize onError with
-		// useCallback if they need a stable copyRich reference.
-		[initContent, timeout, options?.onError],
+		// onError is read via onErrorRef — no longer a dependency.
+		// copyRich only re-creates when initContent or timeout changes.
+		[initContent, timeout],
 	)
 
 	const reset = useCallback((): void => {
