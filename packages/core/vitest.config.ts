@@ -21,6 +21,7 @@ export default defineConfig({
 				'src/clipboard/fallback.ts': { 100: true },
 				'src/lib/errors.ts': { 100: true },
 				'src/lib/env.ts': { 100: true },
+				'src/clipboard/rich-detect.ts': { 100: true },
 			},
 		},
 	},
