@@ -63,9 +63,9 @@ Plans:
   3. Developer can call `readRichContent()` and receive `{ html: string | null, text: string | null }` from clipboard
   4. All three functions accept an `onError` callback with typed `BrowserUtilsError` and never throw for expected failures
   5. Unit tests achieve 100% line and branch coverage on all new core functions
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 Plans:
-- [ ] 10-01-PLAN.md — RichContent type, isRichClipboardSupported detection, error code registration, barrel exports
+- [x] 10-01-PLAN.md — RichContent type, isRichClipboardSupported detection, error code registration, barrel exports
 - [ ] 10-02-PLAN.md — copyRichContent implementation and unit tests
 - [ ] 10-03-PLAN.md — readRichContent implementation and unit tests
 
@@ -110,6 +110,6 @@ Phases execute in numeric order: 9 -> 10 -> 11 -> 12
 | 7. Playgrounds | v0.3.0 | 4/4 | Complete | 2026-04-13 |
 | 8. Docs & Release Infra | v0.3.0 | 3/3 | Complete | 2026-04-14 |
 | 9. Architecture Audit & Tooling Foundation | v0.4.0 | 2/2 | Complete | 2026-04-16 |
-| 10. Rich Clipboard Core | v0.4.0 | 0/3 | Not started | - |
+| 10. Rich Clipboard Core | v0.4.0 | 1/3 | In Progress|  |
 | 11. Framework Adapters | v0.4.0 | 0/TBD | Not started | - |
 | 12. Benchmarks & CI Hardening | v0.4.0 | 0/TBD | Not started | - |
