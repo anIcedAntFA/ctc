@@ -22,6 +22,7 @@ export default defineConfig({
 				'src/lib/errors.ts': { 100: true },
 				'src/lib/env.ts': { 100: true },
 				'src/clipboard/rich-detect.ts': { 100: true },
+				'src/clipboard/rich-copy.ts': { 100: true },
 			},
 		},
 	},
