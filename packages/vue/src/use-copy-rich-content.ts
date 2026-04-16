@@ -138,6 +138,7 @@ export function useCopyRichContent(
 	onUnmounted(() => {
 		if (timer !== null) {
 			clearTimeout(timer)
+			timer = null
 		}
 	})
 
