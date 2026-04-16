@@ -7,6 +7,7 @@ export type ErrorCode =
 	| 'CLIPBOARD_WRITE_FAILED'
 	| 'CLIPBOARD_READ_FAILED'
 	| 'INSECURE_CONTEXT'
+	| 'RICH_CLIPBOARD_NOT_SUPPORTED'
 
 /**
  * Structured error for browser utility operations.

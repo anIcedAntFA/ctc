@@ -97,6 +97,7 @@ Developers can copy, read, and detect clipboard support in any browser environme
 | Adapter return type { copy, copied, error, reset } | reset() useful for programmatic state clearing beyond auto-timeout | ✓ Good — intentional improvement over 3-field spec |
 | /stores + /runes as subpath exports (not separate packages) | Single @ngockhoi96/ctc-svelte package, consumers pick compatibility tier | ✓ Good — clean, standard subpath export pattern |
 | playground/vanilla as E2E fixture replacement | Eliminates separate static HTML fixture; playground is always up-to-date | ✓ Good — single source of truth for E2E |
+| `src/clipboard/` flat structure | Discoverability -- all clipboard functions live at the same level; consumers see a flat, predictable surface without needing to know an internal rich/ vs plain/ split. Forward rule: new clipboard functions go flat into `src/clipboard/` until an explicit architectural decision is made to reorganize. | Active -- enforced from Phase 9 onward |
 
 ## Evolution
 
