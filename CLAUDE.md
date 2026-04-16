@@ -65,7 +65,7 @@ A modular, tree-shakeable browser utilities library starting with clipboard oper
 
 **Constraints:**
 - Zero dependencies — only browser native APIs
-- Bundle size < 1KB gzip for core clipboard module
+- Bundle size < 1.5KB gzip for core clipboard module
 - Browser target: ES2020+ (>95% global support)
 - No default exports — named exports only
 <!-- GSD:project-end -->
