@@ -69,7 +69,7 @@
 				"import": "./dist/runes.d.mts",
 				"require": "./dist/runes.d.cts"
 			},
-			"svelte": "./src/runes/use-copy-to-clipboard.svelte.ts",
+			"svelte": "./src/runes/index.ts",
 			"import": "./dist/runes.mjs",
 			"require": "./dist/runes.cjs"
 		},
