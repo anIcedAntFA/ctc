@@ -5,9 +5,9 @@ milestone_name: Rich Clipboard & Quality
 status: in_progress
 stopped_at: ""
 last_updated: "2026-04-16T00:00:00.000Z"
-last_activity: 2026-04-16 -- v0.4.0 milestone started
+last_activity: 2026-04-16 -- Roadmap created for v0.4.0
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -20,85 +20,61 @@ progress:
 
 See: .planning/PROJECT.md (updated 2026-04-16)
 
-**Core value:** Developers can copy, read, and detect clipboard support in any browser environment with a single import — no framework lock-in, no bloat, no surprises. Framework adapter packages add idiomatic hooks/composables/actions on top of the same zero-dependency core.
-**Current focus:** Defining requirements for v0.4.0
+**Core value:** Developers can copy, read, and detect clipboard support in any browser environment with a single import -- no framework lock-in, no bloat, no surprises. Framework adapter packages add idiomatic hooks/composables/actions on top of the same zero-dependency core.
+**Current focus:** Phase 9 -- Architecture Audit & Tooling Foundation
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-04-16 — Milestone v0.4.0 started
+Phase: 9 of 12 (Architecture Audit & Tooling Foundation)
+Plan: --
+Status: Ready to plan
+Last activity: 2026-04-16 -- Roadmap created for v0.4.0 (4 phases, 19 requirements)
+
+Progress: [░░░░░░░░░░] 0%
 
 ## Previous Milestones
 
-**v0.1.0** — Complete (2026-04-09)
-- Phase 1: Project Foundation ✓
-- Phase 2: Clipboard API ✓
-- Phase 3: Quality & Release ✓
-- Published to npm as `@ngockhoi96/ctc@0.2.0`
+**v0.1.0** -- Complete (2026-04-09)
+- Phases 1-3: Foundation, Clipboard API, Quality & Release
+- Published @ngockhoi96/ctc@0.2.0
 
-**v0.3.0** — Complete (2026-04-14)
-- Phase 4: Monorepo Foundation ✓
-- Phase 5: React & Vue Adapters ✓
-- Phase 6: Svelte Adapter ✓
-- Phase 7: Playgrounds ✓
-- Phase 8: Docs & Release Infra ✓
-- 4 packages published: @ngockhoi96/ctc, ctc-react, ctc-vue, ctc-svelte
+**v0.3.0** -- Complete (2026-04-14)
+- Phases 4-8: Monorepo, React/Vue/Svelte Adapters, Playgrounds, Docs
+- 4 packages published: ctc, ctc-react, ctc-vue, ctc-svelte
 
 ## Performance Metrics
 
-**Velocity (v0.1.0 milestone):**
+**Velocity:**
+- Total plans completed: 21 (8 v0.1.0 + 13 v0.3.0)
+- v0.4.0 plans completed: 0
 
-| Phase | Plan | Duration | Tasks | Files |
-|-------|------|----------|-------|-------|
-| Phase 01 | P01 | 4min | 3 | 10 |
-| Phase 01 | P02 | 3min | 2 | 9 |
-| Phase 02 | P01 | 10min | 2 | 4 |
-| Phase 02 | P02 | 15min | 3 | 5 |
-| Phase 03 | P01 | 4min | 3 | 7 |
-| Phase 03 | P02 | 155s | 2 | 6 |
-| Phase 03 | P03 | 15s | 2 | 2 |
-| Phase 03 | P04 | 129s | 1 | 2 |
+**By Phase (v0.4.0):**
 
-**Velocity (v0.3.0 milestone):**
-
-| Phase | Plans | Timeline | Notes |
-|-------|-------|----------|-------|
-| Phase 04 | 2 | 2026-04-14 | Audit/gap-fill (Phase 7 pre-built scaffold) |
-| Phase 05 | 2 | 2026-04-13 | React + Vue adapters |
-| Phase 06 | 2 | 2026-04-13 | Svelte action + stores/runes |
-| Phase 07 | 4 | 2026-04-13 | Four playgrounds |
-| Phase 08 | 3 | 2026-04-14 | Docs + GitHub templates + formatter |
+| Phase | Plans | Total | Avg/Plan |
+|-------|-------|-------|----------|
+| - | - | - | - |
 
 ## Accumulated Context
 
 ### Key Decisions (carry forward)
 
-- tsdown exports:true auto-generates exports map on each build — manual exports edits are overwritten on build
-- pnpm workspaces + Turborepo; CI uses --filter=./packages/* to exclude playgrounds
-- Adapter return type: { copy, copied, error, reset } — reset() is intentional addition beyond original spec
+- tsdown exports:true auto-generates exports map -- manual exports edits overwritten on build
+- Adapter return type: { copy, copied, error, reset } -- reset() intentional addition
 - Svelte adapter ships /stores (Svelte 4+5) and /runes (Svelte 5) as subpath exports
 - playground/vanilla doubles as Playwright E2E fixture
-- Changesets in independent mode — mode: "independent" explicitly set in config.json (fixed after v0.3.0 audit)
-- VitePress docs deferred to v0.4.0+
+- Changesets independent mode for per-package versioning
+- VitePress docs deferred to v0.5.0+
 
 ### Pending Todos
 
-None — milestone complete.
+None.
 
 ### Blockers/Concerns
 
 None.
 
-## Quick Tasks Completed
-
-| Date | Task | Output |
-|------|------|--------|
-| 2026-04-14 | Research npm publish flow + create publish guide | `doc-local/publish_guide.md` |
-
 ## Session Continuity
 
-Last session: 2026-04-14
-Stopped at: v0.3.0 milestone complete — publish guide created
-Resume: First-publish 3 adapter packages (see doc-local/publish_guide.md §5), then run `/gsd-new-milestone` to plan v0.4.0
+Last session: 2026-04-16
+Stopped at: Roadmap created for v0.4.0 milestone (Phases 9-12)
+Resume: Run `/gsd-plan-phase 9` to plan Architecture Audit & Tooling Foundation
