@@ -48,7 +48,10 @@
   2. CI runs a dedicated `validate` job that executes attw + publint separately from the test job
   3. size-limit config accepts 1.5KB gzip budget for `dist/clipboard/index.mjs` and passes
   4. `RICH_CLIPBOARD_NOT_SUPPORTED` exists in the `ErrorCode` union and can be imported from the library
-**Plans**: TBD
+**Plans:** 2 plans
+Plans:
+- [ ] 09-01-PLAN.md — Document flat structure rationale, raise size-limit budgets, add error code
+- [ ] 09-02-PLAN.md — Extract validate into dedicated CI job
 
 ### Phase 10: Rich Clipboard Core
 **Goal**: Developers can copy and read rich content (HTML + plain text) via ClipboardItem API with the same ergonomics as existing clipboard functions
@@ -102,7 +105,7 @@ Phases execute in numeric order: 9 -> 10 -> 11 -> 12
 | 6. Svelte Adapter | v0.3.0 | 2/2 | Complete | 2026-04-13 |
 | 7. Playgrounds | v0.3.0 | 4/4 | Complete | 2026-04-13 |
 | 8. Docs & Release Infra | v0.3.0 | 3/3 | Complete | 2026-04-14 |
-| 9. Architecture Audit & Tooling Foundation | v0.4.0 | 0/TBD | Not started | - |
+| 9. Architecture Audit & Tooling Foundation | v0.4.0 | 0/2 | Not started | - |
 | 10. Rich Clipboard Core | v0.4.0 | 0/TBD | Not started | - |
 | 11. Framework Adapters | v0.4.0 | 0/TBD | Not started | - |
 | 12. Benchmarks & CI Hardening | v0.4.0 | 0/TBD | Not started | - |
