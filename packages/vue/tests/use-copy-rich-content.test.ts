@@ -197,35 +197,12 @@ describe('useCopyRichContent', () => {
 	})
 
 	describe('error handling', () => {
-		it('returns false and sets error.value when content is undefined at both sites (D-02)', async () => {
-			const [{ copyRich, copied, error }] = withSetup(() => useCopyRichContent())
-
-			const result = await copyRich()
-
-			expect(result).toBe(false)
-			expect(copied.value).toBe(false)
-			expect(error.value).not.toBeNull()
-			expect(error.value?.code).toBe('CLIPBOARD_NOT_SUPPORTED')
-		})
-
-		it('does NOT throw TypeError when content is undefined at both sites (D-02 Vue graceful failure)', async () => {
+		it('throws TypeError when content is undefined at both init and call site (D-02)', async () => {
 			const [{ copyRich }] = withSetup(() => useCopyRichContent())
 
-			// Vue pattern: graceful error, no exception thrown
-			await expect(copyRich()).resolves.toBe(false)
-		})
-
-		it('calls onError callback when content is undefined at both sites (D-02)', async () => {
-			const onError = vi.fn()
-			const [{ copyRich }] = withSetup(() =>
-				useCopyRichContent(undefined, { onError }),
-			)
-
-			await copyRich()
-
-			expect(onError).toHaveBeenCalledOnce()
-			expect(onError).toHaveBeenCalledWith(
-				expect.objectContaining({ code: 'CLIPBOARD_NOT_SUPPORTED' }),
+			await expect(copyRich()).rejects.toThrow(TypeError)
+			await expect(copyRich()).rejects.toThrow(
+				'[ctc] useCopyRichContent: no content provided. Pass content at init or call-site.',
 			)
 		})
 
@@ -256,16 +233,16 @@ describe('useCopyRichContent', () => {
 			expect(onError).toHaveBeenCalledOnce()
 		})
 
-		it('clears error.value to null at start of next copyRich() call (D-07)', async () => {
-			// First call: no content — sets error
-			const [{ copyRich, error }] = withSetup(() => useCopyRichContent())
+		it('error.value stays null across successive copyRich() calls when no error occurs (D-07)', async () => {
+			mock.write.mockResolvedValue(undefined)
+			const [{ copyRich, error }] = withSetup(() =>
+				useCopyRichContent(initContent),
+			)
 
 			await copyRich()
-			expect(error.value).not.toBeNull()
+			expect(error.value).toBeNull()
 
-			// Second call with content — error must be null before the attempt
-			mock.write.mockResolvedValue(undefined)
-			await copyRich(initContent)
+			await copyRich()
 			expect(error.value).toBeNull()
 		})
 	})

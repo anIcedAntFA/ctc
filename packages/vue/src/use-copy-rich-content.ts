@@ -85,17 +85,12 @@ export function useCopyRichContent(
 	async function copyRich(callContent?: RichContent): Promise<boolean> {
 		const content = callContent ?? initContent
 
-		// D-02: no content at either init or call-site — graceful failure (Vue pattern).
-		// Vue does NOT throw TypeError; instead sets error state and returns false.
+		// D-02: no content at either init or call-site — programmer error.
+		// Throws TypeError to match React and Svelte adapter contract.
 		if (content === undefined) {
-			const err: BrowserUtilsError = {
-				code: 'CLIPBOARD_NOT_SUPPORTED',
-				message:
-					'No content provided to copy. Pass content at init or call-site.',
-			}
-			error.value = err
-			options?.onError?.(err)
-			return false
+			throw new TypeError(
+				'[ctc] useCopyRichContent: no content provided. Pass content at init or call-site.',
+			)
 		}
 
 		// D-07: clear error before each attempt.
