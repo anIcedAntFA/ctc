@@ -1,6 +1,6 @@
 # .github/workflows/ci.yml
 # Runs on every PR targeting master.
-# Pipeline: lint-and-build → unit-test (matrix) → e2e-test
+# Pipeline: lint-and-build → [unit-test (matrix) | validate | e2e-test]
 # Turbo orchestrates tasks across the monorepo; each job delegates to turbo run.
 name: CI
 
@@ -58,7 +58,27 @@ jobs:
       - name: Unit tests with coverage
         run: pnpm turbo run test -- --coverage
 
-      - name: Validate package (publint + attw)
+  validate:
+    name: Validate Packages (publint + attw)
+    needs: lint-and-build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build (needed for dist/ validation)
+        run: pnpm turbo run build
+
+      - name: Validate packages
         run: pnpm turbo run validate
 
   e2e-test:
