@@ -23,6 +23,7 @@ export default defineConfig({
 				'src/lib/env.ts': { 100: true },
 				'src/clipboard/rich-detect.ts': { 100: true },
 				'src/clipboard/rich-copy.ts': { 100: true },
+				'src/clipboard/rich-read.ts': { 100: true },
 			},
 		},
 	},
