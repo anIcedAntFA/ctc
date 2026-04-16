@@ -50,8 +50,8 @@
   4. `RICH_CLIPBOARD_NOT_SUPPORTED` exists in the `ErrorCode` union and can be imported from the library
 **Plans:** 2 plans
 Plans:
-- [ ] 09-01-PLAN.md — Document flat structure rationale, raise size-limit budgets, add error code
-- [ ] 09-02-PLAN.md — Extract validate into dedicated CI job
+- [x] 09-01-PLAN.md — Document flat structure rationale, raise size-limit budgets, add error code
+- [x] 09-02-PLAN.md — Extract validate into dedicated CI job
 
 ### Phase 10: Rich Clipboard Core
 **Goal**: Developers can copy and read rich content (HTML + plain text) via ClipboardItem API with the same ergonomics as existing clipboard functions
