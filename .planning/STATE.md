@@ -1,38 +1,34 @@
 ---
 gsd_state_version: 1.0
-milestone: v0.3.0
-milestone_name: Monorepo + Framework Adapters
-status: complete
+milestone: v0.4.0
+milestone_name: Rich Clipboard & Quality
+status: in_progress
 stopped_at: ""
-last_updated: "2026-04-14T00:00:00.000Z"
-last_activity: 2026-04-14 -- v0.3.0 milestone complete
+last_updated: "2026-04-16T00:00:00.000Z"
+last_activity: 2026-04-16 -- v0.4.0 milestone started
 progress:
-  total_phases: 5
-  completed_phases: 5
-  total_plans: 13
-  completed_plans: 13
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-14)
+See: .planning/PROJECT.md (updated 2026-04-16)
 
 **Core value:** Developers can copy, read, and detect clipboard support in any browser environment with a single import — no framework lock-in, no bloat, no surprises. Framework adapter packages add idiomatic hooks/composables/actions on top of the same zero-dependency core.
-**Current focus:** Planning next milestone (v0.4.0)
+**Current focus:** Defining requirements for v0.4.0
 
 ## Current Position
 
-Milestone v0.3.0 complete — shipped 2026-04-14.
-
-All phases complete:
-- Phase 04: Monorepo Foundation ✓
-- Phase 05: React & Vue Adapters ✓
-- Phase 06: Svelte Adapter ✓
-- Phase 07: Playgrounds ✓
-- Phase 08: Docs & Release Infra ✓
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-04-16 — Milestone v0.4.0 started
 
 ## Previous Milestones
 

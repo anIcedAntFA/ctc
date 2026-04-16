@@ -8,6 +8,16 @@ A modular, tree-shakeable browser utilities library starting with clipboard oper
 
 Developers can copy, read, and detect clipboard support in any browser environment with a single import — no framework lock-in, no bloat, no surprises. Framework adapter packages add idiomatic hooks/composables/actions on top of the same zero-dependency core.
 
+## Current Milestone: v0.4.0 Rich Clipboard & Quality
+
+**Goal:** Extend ctc with rich content clipboard support (HTML + plain text via ClipboardItem API), ship adapter updates for all three frameworks, and establish published benchmarks — with an architecture review first to settle the right folder structure.
+
+**Target features:**
+- Architecture audit: settle clipboard/ folder shape + wire attw/publint tooling properly
+- `copyRichContent(html, text)` + `readRichContent()` core functions via ClipboardItem API
+- Framework adapters: React, Vue, Svelte rich clipboard hooks/composables/actions
+- Published benchmarks: tinybench/hyperfine comparisons vs clipboard-copy + copy-to-clipboard
+
 ## Requirements
 
 ### Validated
@@ -42,15 +52,14 @@ Developers can copy, read, and detect clipboard support in any browser environme
 
 ### Active
 
-*(No active requirements — planning next milestone)*
+*(Requirements defined in REQUIREMENTS.md — v0.4.0 milestone)*
 
 ### Out of Scope
 
-- VitePress/Starlight documentation site — defer to v0.4.0+, README sufficient until API stabilises
-- Rich content clipboard (`copyRichContent`, `readRichContent`) — defer to v0.4.0+, needs Clipboard Item API design
+- VitePress/Starlight documentation site — defer to v0.5.0+, README sufficient until API stabilises
 - Server-side / Node-only utilities — browser-only library
 - Polyfills for legacy browsers — document limitations instead
-- CLI tool — no real need identified
+- CLI code generator (shadcn-style) — explore-only idea, no committed need for v0.4.0
 - Transparent/auto fallback — fallback is explicit, separate function
 - `/stores` subpath demonstrated in playground/svelte — action + runes cover primary patterns; stores is Svelte 4+5 compat path
 
@@ -100,4 +109,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-04-14 after v0.3.0 milestone*
+*Last updated: 2026-04-16 after v0.4.0 milestone start*
