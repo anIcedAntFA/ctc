@@ -42,7 +42,14 @@ export function createRichClipboardMock(): RichClipboardMock {
 		vi.stubGlobal('navigator', {
 			clipboard: { write },
 		})
-		vi.stubGlobal('window', { isSecureContext: true })
+		// Use Object.defineProperty instead of vi.stubGlobal('window', ...) to avoid
+		// replacing the entire window object — other globals (window.location, etc.)
+		// must remain intact for the composable under test.
+		Object.defineProperty(window, 'isSecureContext', {
+			value: true,
+			writable: true,
+			configurable: true,
+		})
 	}
 
 	function uninstall(): void {
