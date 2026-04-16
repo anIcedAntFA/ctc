@@ -34,7 +34,7 @@
 
 - [ ] **Phase 9: Architecture Audit & Tooling Foundation** - Settle clipboard/ folder shape, wire validation tooling, and prepare error codes for rich clipboard
 - [x] **Phase 10: Rich Clipboard Core** - Ship copyRichContent, readRichContent, and isRichClipboardSupported with full test coverage (completed 2026-04-16)
-- [ ] **Phase 11: Framework Adapters** - Add useCopyRichContent / copyRichAction across React, Vue, and Svelte adapters
+- [x] **Phase 11: Framework Adapters** - Add useCopyRichContent / copyRichAction across React, Vue, and Svelte adapters (completed 2026-04-16)
 - [ ] **Phase 12: Benchmarks & CI Hardening** - Establish benchmarks workspace with published comparison results
 
 ## Phase Details
@@ -79,11 +79,11 @@ Plans:
   3. Svelte developer can use `copyRichAction` as a Svelte action and import a runes variant from `/runes` subpath
   4. All three adapter packages maintain 100% branch coverage after additions
   5. All three adapter packages remain under 2KB brotli
-**Plans:** 3 plans
+**Plans:** 3/3 plans complete
 Plans:
-- [ ] 11-01-PLAN.md — React useCopyRichContent hook + tests
-- [ ] 11-02-PLAN.md — Vue useCopyRichContent composable + tests
-- [ ] 11-03-PLAN.md — Svelte copyRichAction + runes/stores variants + barrel files + tests
+- [x] 11-01-PLAN.md — React useCopyRichContent hook + tests
+- [x] 11-02-PLAN.md — Vue useCopyRichContent composable + tests
+- [x] 11-03-PLAN.md — Svelte copyRichAction + runes/stores variants + barrel files + tests
 
 ### Phase 12: Benchmarks & CI Hardening
 **Goal**: Published benchmark data demonstrates ctc performance and bundle size against competing libraries
@@ -114,5 +114,5 @@ Phases execute in numeric order: 9 -> 10 -> 11 -> 12
 | 8. Docs & Release Infra | v0.3.0 | 3/3 | Complete | 2026-04-14 |
 | 9. Architecture Audit & Tooling Foundation | v0.4.0 | 2/2 | Complete | 2026-04-16 |
 | 10. Rich Clipboard Core | v0.4.0 | 3/3 | Complete    | 2026-04-16 |
-| 11. Framework Adapters | v0.4.0 | 0/3 | Not started | - |
+| 11. Framework Adapters | v0.4.0 | 3/3 | Complete   | 2026-04-16 |
 | 12. Benchmarks & CI Hardening | v0.4.0 | 0/TBD | Not started | - |
