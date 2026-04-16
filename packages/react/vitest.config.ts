@@ -12,6 +12,7 @@ export default defineConfig({
 			exclude: ['src/index.ts'],
 			thresholds: {
 				'src/use-copy-to-clipboard.ts': { 100: true },
+				'src/use-copy-rich-content.ts': { 100: true },
 			},
 		},
 	},
