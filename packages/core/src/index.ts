@@ -6,6 +6,7 @@ export type {
 	RichContent,
 } from './clipboard/index.ts'
 export {
+	copyRichContent,
 	copyToClipboard,
 	copyToClipboardLegacy,
 	isClipboardReadSupported,
