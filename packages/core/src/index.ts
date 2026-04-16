@@ -3,11 +3,13 @@ export type {
 	ClipboardOptions,
 	ErrorCode,
 	OnErrorCallback,
+	RichContent,
 } from './clipboard/index.ts'
 export {
 	copyToClipboard,
 	copyToClipboardLegacy,
 	isClipboardReadSupported,
 	isClipboardSupported,
+	isRichClipboardSupported,
 	readFromClipboard,
 } from './clipboard/index.ts'
