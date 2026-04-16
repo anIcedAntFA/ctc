@@ -13,4 +13,5 @@ export {
 	isClipboardSupported,
 	isRichClipboardSupported,
 	readFromClipboard,
+	readRichContent,
 } from './clipboard/index.ts'
