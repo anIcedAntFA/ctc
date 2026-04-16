@@ -1,413 +1,429 @@
 # Architecture Research
 
-**Domain:** Browser utilities library (clipboard-focused, tree-shakeable, framework-agnostic)
-**Researched:** 2026-04-08
+**Domain:** Rich clipboard integration into existing browser utilities library
+**Researched:** 2026-04-16
 **Confidence:** HIGH
 
-## Standard Architecture
+## The Core Question: Flat clipboard/ vs Subfolders
 
-### System Overview
+**Recommendation: Keep all clipboard functions in a single flat `src/clipboard/` folder. Do NOT create subfolders like `src/clipboard/rich/`.**
+
+### Rationale
+
+1. **The clipboard/ folder exists because ctc is a browser utilities library, not a clipboard-only library.** The `src/clipboard/` subfolder is a domain module boundary -- it anticipates `src/storage/`, `src/media/`, `src/dom/` as peers. This is correct architecture. When future modules arrive, each gets its own top-level directory under `src/`.
+
+2. **Rich clipboard functions are clipboard operations, not a separate domain.** `copyRichContent()` and `readRichContent()` use the same browser API family (`navigator.clipboard.write()` / `.read()`), the same secure context requirements, the same error codes, and the same options pattern. They belong alongside `copyToClipboard()` and `readFromClipboard()` -- not in a subfolder.
+
+3. **The existing pattern is one-function-per-file, not one-feature-per-folder.** `copy.ts` has `copyToClipboard`, `read.ts` has `readFromClipboard`, `detect.ts` has detection functions. Rich functions follow this pattern: `copy-rich.ts` has `copyRichContent`, `read-rich.ts` has `readRichContent`. This preserves maximum tree-shaking granularity.
+
+4. **Subfolders would break the subpath export pattern.** The core package exports `"./clipboard"` mapping to `src/clipboard/index.ts`. Adding `src/clipboard/rich/` would either: (a) require a new subpath export `"./clipboard/rich"` -- unnecessary complexity for 2 functions, or (b) roll everything up through the same barrel -- making the subfolder pointless.
+
+5. **Precedent in the codebase:** The Svelte adapter has `action/`, `runes/`, `stores/` subfolders -- but those exist because they are separate *subpath exports* with different build requirements (runes needs uncompiled `.svelte.ts` source). Rich clipboard has no such requirement.
+
+## System Overview
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     Public API Layer                             │
-│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────┐  │
-│  │ src/clipboard/    │  │ src/storage/     │  │ src/media/   │  │
-│  │ (Phase 1)        │  │ (Future)         │  │ (Future)     │  │
-│  └────────┬─────────┘  └────────┬─────────┘  └──────┬───────┘  │
-│           │                     │                    │          │
-├───────────┴─────────────────────┴────────────────────┴──────────┤
-│                     Internal Utils Layer                         │
+│                    Framework Adapters                            │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────┐  │
+│  │ ctc-react    │  │ ctc-vue      │  │ ctc-svelte           │  │
+│  │ useRichCopy  │  │ useRichCopy  │  │ richCopyAction       │  │
+│  │ useRichPaste │  │ useRichPaste │  │ useRichCopy (runes)  │  │
+│  └──────┬───────┘  └──────┬───────┘  └──────────┬───────────┘  │
+│         │                 │                      │              │
+├─────────┴─────────────────┴──────────────────────┴──────────────┤
+│                      @ngockhoi96/ctc (core)                      │
 │  ┌──────────────────────────────────────────────────────────┐   │
-│  │ src/utils/                                                │   │
-│  │   env.ts — SSR guards, secure context detection           │   │
-│  │   errors.ts — typed error creation, onError dispatch      │   │
-│  │   types.ts — shared type definitions                      │   │
+│  │ src/clipboard/                                            │   │
+│  │   copy.ts        — copyToClipboard (writeText)            │   │
+│  │   copy-rich.ts   — copyRichContent (write + ClipboardItem)│   │
+│  │   read.ts        — readFromClipboard (readText)           │   │
+│  │   read-rich.ts   — readRichContent (read + ClipboardItem) │   │
+│  │   detect.ts      — isClipboardSupported + isRichSupported │   │
+│  │   fallback.ts    — copyToClipboardLegacy (execCommand)    │   │
+│  │   types.ts       — ClipboardOptions, RichClipboardContent │   │
+│  │   index.ts       — barrel re-exports                      │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │ src/lib/                                                  │   │
+│  │   env.ts    — isBrowser(), isSecureContext()               │   │
+│  │   errors.ts — createError(), handleError()                 │   │
+│  │   types.ts  — ErrorCode, BrowserUtilsError, OnErrorCallback│   │
 │  └──────────────────────────────────────────────────────────┘   │
 ├─────────────────────────────────────────────────────────────────┤
 │                     Browser APIs (Runtime)                       │
-│  ┌──────────┐  ┌──────────────┐  ┌─────────────┐               │
-│  │Clipboard │  │ Permissions  │  │  DOM/Window  │               │
-│  │   API    │  │     API      │  │   globals    │               │
-│  └──────────┘  └──────────────┘  └─────────────┘               │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────┐  │
+│  │ Clipboard API    │  │ ClipboardItem    │  │ Blob API     │  │
+│  │ writeText/       │  │ constructor      │  │ text/html    │  │
+│  │ readText         │  │ getType/types    │  │ text/plain   │  │
+│  └──────────────────┘  └──────────────────┘  └──────────────┘  │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### Component Responsibilities
-
-| Component | Responsibility | Typical Implementation |
-|-----------|----------------|------------------------|
-| `src/clipboard/` | All clipboard operations (copy, read, detect) | Individual function files + barrel index.ts |
-| `src/utils/env.ts` | Environment detection (SSR, secure context, API availability) | Pure functions returning boolean |
-| `src/utils/errors.ts` | Error code constants, error factory, onError callback dispatch | Typed error objects, helper to invoke callbacks |
-| `src/utils/types.ts` | Shared interfaces/types across all modules | TypeScript type-only file (zero runtime) |
-| `src/index.ts` | Root barrel export — re-exports from all modules | Re-export only, no logic |
-
 ## Recommended Project Structure
+
+### Core Package (packages/core)
 
 ```
 src/
 ├── clipboard/
-│   ├── copy.ts               # copyToClipboard(), copyRichContent()
-│   ├── read.ts               # readFromClipboard(), readRichContent()
-│   ├── detect.ts             # isClipboardSupported(), isClipboardReadSupported()
-│   ├── fallback.ts           # execCommand-based fallback (explicit, separate)
-│   ├── types.ts              # ClipboardOptions, ClipboardItemData
-│   └── index.ts              # barrel: re-exports public API from this module
-├── utils/
-│   ├── env.ts                # isBrowser(), isSecureContext()
-│   ├── errors.ts             # BrowserUtilsError, createError(), handleError()
-│   └── types.ts              # shared types (ErrorCode, OnErrorCallback)
-└── index.ts                  # root barrel: re-exports from clipboard/
+│   ├── copy.ts               # copyToClipboard() — EXISTING, no changes
+│   ├── copy-rich.ts          # copyRichContent() — NEW
+│   ├── read.ts               # readFromClipboard() — EXISTING, no changes
+│   ├── read-rich.ts          # readRichContent() — NEW
+│   ├── detect.ts             # isClipboardSupported() — EXISTING + isRichClipboardSupported() NEW
+│   ├── fallback.ts           # copyToClipboardLegacy() — EXISTING, no changes
+│   ├── types.ts              # ClipboardOptions — EXISTING + RichClipboardContent, RichClipboardOptions NEW
+│   └── index.ts              # barrel — MODIFIED to add new exports
+├── lib/
+│   ├── env.ts                # EXISTING, no changes
+│   ├── errors.ts             # EXISTING, no changes
+│   └── types.ts              # MODIFIED to add new error codes
+└── index.ts                  # MODIFIED to re-export new functions
 ```
+
+### What Changes vs What Stays
+
+| File | Status | Change Description |
+|------|--------|--------------------|
+| `src/clipboard/copy.ts` | UNCHANGED | Plain text copy stays as-is |
+| `src/clipboard/read.ts` | UNCHANGED | Plain text read stays as-is |
+| `src/clipboard/fallback.ts` | UNCHANGED | Legacy fallback stays as-is |
+| `src/clipboard/detect.ts` | MODIFIED | Add `isRichClipboardSupported()` function |
+| `src/clipboard/types.ts` | MODIFIED | Add `RichClipboardContent`, `RichClipboardOptions` types |
+| `src/clipboard/index.ts` | MODIFIED | Add new exports to barrel |
+| `src/clipboard/copy-rich.ts` | NEW | `copyRichContent(html, plainText?, options?)` |
+| `src/clipboard/read-rich.ts` | NEW | `readRichContent(options?)` |
+| `src/lib/types.ts` | MODIFIED | Add `RICH_CLIPBOARD_NOT_SUPPORTED` error code |
+| `src/lib/errors.ts` | MODIFIED | Add new error code to expected set if needed |
+| `src/index.ts` | MODIFIED | Re-export new functions (auto from barrel) |
 
 ### Structure Rationale
 
-- **`clipboard/` as a self-contained module:** Each domain (clipboard, future storage, future media) gets its own directory. This maps directly to subpath exports (`@ngockhoi96/core/clipboard`) and enables consumers to import only what they need.
-- **One function per file:** `copy.ts`, `read.ts`, `detect.ts` each contain one concern. This is the strongest tree-shaking guarantee because bundlers can eliminate entire files. Barrel files only re-export, never contain logic.
-- **`fallback.ts` is separate from `copy.ts`:** The execCommand fallback is an explicit opt-in, not mixed into the modern API. Consumers who only target HTTPS never pay for fallback code.
-- **`utils/` is internal-only:** Not exported from the root barrel. These are implementation details consumed by clipboard/ (and future modules). Bundlers will inline or tree-shake them as needed.
-- **`types.ts` at both levels:** Module-specific types in `clipboard/types.ts`, shared types in `utils/types.ts`. Type-only files produce zero runtime code.
+- **`copy-rich.ts` as a separate file from `copy.ts`:** The plain text path uses `writeText()` (simple string). The rich path uses `new ClipboardItem()` + `navigator.clipboard.write()` (Blob construction). These are different enough browser APIs that they should not share a function body. Separate files mean consumers who only use `copyToClipboard` never pay for `Blob`/`ClipboardItem` code.
+- **`read-rich.ts` as a separate file from `read.ts`:** Same principle. `readText()` returns a string directly. `read()` returns `ClipboardItem[]` requiring MIME type iteration and Blob-to-text conversion. Different complexity, different code paths.
+- **No subfolder:** The clipboard/ directory stays flat with 8 files (6 existing + 2 new). This is a manageable size. Subfolders are warranted at 15+ files or when build requirements differ -- neither applies here.
 
 ## Architectural Patterns
 
-### Pattern 1: Guard-First Function Design
+### Pattern 1: Dual-MIME ClipboardItem Construction
 
-**What:** Every public function begins with environment guards before touching any browser API. Return early with a failure value rather than throwing.
-**When to use:** Every exported function that accesses browser globals.
-**Trade-offs:** Slight verbosity in every function, but guarantees SSR safety and graceful degradation. No try/catch needed at call sites.
+**What:** When copying rich content, always include both `text/html` AND `text/plain` representations in a single `ClipboardItem`. This ensures paste targets that don't support HTML still get the plain text.
+**When to use:** Every `copyRichContent` call.
+**Trade-offs:** Slightly more code than HTML-only, but guarantees universal paste compatibility.
 
 **Example:**
 ```typescript
-import { isBrowser, isSecureContext } from '../utils/env'
-import { createError, handleError } from '../utils/errors'
-import type { CopyOptions } from './types'
-
-export async function copyToClipboard(
-  text: string,
-  options?: CopyOptions,
+export async function copyRichContent(
+  html: string,
+  plainText?: string,
+  options?: RichClipboardOptions,
 ): Promise<boolean> {
-  // Guard: SSR environment
-  if (!isBrowser()) {
-    handleError('CLIPBOARD_NOT_SUPPORTED', 'Not in a browser environment', options?.onError)
-    return false
-  }
+  // ... guards (isBrowser, isSecureContext, ClipboardItem check) ...
 
-  // Guard: API availability
-  if (!navigator.clipboard?.writeText) {
-    handleError('CLIPBOARD_NOT_SUPPORTED', 'Clipboard API not available', options?.onError)
-    return false
-  }
+  const htmlBlob = new Blob([html], { type: 'text/html' })
+  const textBlob = new Blob([plainText ?? stripHtml(html)], { type: 'text/plain' })
 
-  // Guard: Secure context (HTTPS required)
-  if (!isSecureContext()) {
-    handleError('CLIPBOARD_NOT_SUPPORTED', 'Secure context required', options?.onError)
-    return false
-  }
+  const item = new ClipboardItem({
+    'text/html': htmlBlob,
+    'text/plain': textBlob,
+  })
 
   try {
-    await navigator.clipboard.writeText(text)
+    await navigator.clipboard.write([item])
     return true
   } catch (error) {
-    handleError('CLIPBOARD_WRITE_FAILED', 'Failed to write to clipboard', options?.onError, error)
+    handleError(createError('CLIPBOARD_WRITE_FAILED', '...', error), options?.onError)
     return false
   }
 }
 ```
 
-### Pattern 2: Typed Error Dispatch (Not Throw)
+### Pattern 2: Structured Rich Content Return Type
 
-**What:** Errors are represented as typed objects with string literal codes. A `handleError` helper logs a warning and invokes the optional `onError` callback. Functions never throw for expected failures.
-**When to use:** All public API functions.
-**Trade-offs:** Callers must check return values instead of catching. This is intentional: clipboard failures are not exceptional in most UX flows.
-
-**Example:**
-```typescript
-// utils/types.ts
-export type ErrorCode =
-  | 'CLIPBOARD_NOT_SUPPORTED'
-  | 'CLIPBOARD_PERMISSION_DENIED'
-  | 'CLIPBOARD_WRITE_FAILED'
-  | 'CLIPBOARD_READ_FAILED'
-
-export interface BrowserUtilsError {
-  code: ErrorCode
-  message: string
-  cause?: unknown
-}
-
-export type OnErrorCallback = (error: BrowserUtilsError) => void
-
-// utils/errors.ts
-export function createError(
-  code: ErrorCode,
-  message: string,
-  cause?: unknown,
-): BrowserUtilsError {
-  return { code, message, cause }
-}
-
-export function handleError(
-  code: ErrorCode,
-  message: string,
-  onError?: OnErrorCallback,
-  cause?: unknown,
-): void {
-  const error = createError(code, message, cause)
-  console.warn(`[@ngockhoi96] ${code}: ${message}`)
-  onError?.(error)
-}
-```
-
-### Pattern 3: Feature Detection as Pure Functions
-
-**What:** Feature detection is extracted into dedicated pure functions that check API availability without side effects. These are both used internally and exported publicly.
-**When to use:** Any browser API that may not exist (SSR, older browsers, non-secure contexts).
-**Trade-offs:** Adds a few bytes to bundle, but prevents cryptic runtime errors and enables consumers to conditionally render UI.
+**What:** `readRichContent` returns a typed object with `html` and `text` fields (both nullable), not raw `ClipboardItem[]`. This matches the library's philosophy of wrapping browser complexity behind clean interfaces.
+**When to use:** The `readRichContent` function.
+**Trade-offs:** Consumers who need raw ClipboardItem access for image/binary data would need a different function (future scope). For HTML+text use cases, this is the right abstraction.
 
 **Example:**
 ```typescript
-// utils/env.ts
-export function isBrowser(): boolean {
-  return typeof navigator !== 'undefined' && typeof window !== 'undefined'
+export interface RichClipboardContent {
+  /** HTML content from clipboard, or null if not available */
+  html: string | null
+  /** Plain text content from clipboard, or null if not available */
+  text: string | null
 }
 
-export function isSecureContext(): boolean {
-  return isBrowser() && window.isSecureContext === true
-}
+export async function readRichContent(
+  options?: ClipboardOptions,
+): Promise<RichClipboardContent | null> {
+  // ... guards ...
 
-// clipboard/detect.ts
-import { isBrowser } from '../utils/env'
+  try {
+    const items = await navigator.clipboard.read()
+    let html: string | null = null
+    let text: string | null = null
 
-export function isClipboardSupported(): boolean {
-  return isBrowser() && typeof navigator.clipboard?.writeText === 'function'
-}
-
-export function isClipboardReadSupported(): boolean {
-  return isBrowser() && typeof navigator.clipboard?.readText === 'function'
-}
-```
-
-### Pattern 4: Barrel Exports with Subpath Mapping
-
-**What:** Each module has a barrel `index.ts` that re-exports its public API. The root `index.ts` re-exports from all modules. `package.json` exports map provides both root and per-module subpath entries.
-**When to use:** Always, for any library targeting tree-shaking.
-**Trade-offs:** Barrel files can hurt tree-shaking if they contain logic or side effects. The rule: barrel files contain ONLY re-export statements, never logic.
-
-**Example:**
-```typescript
-// src/clipboard/index.ts (barrel - re-exports only)
-export { copyToClipboard } from './copy'
-export { copyRichContent } from './copy'  // if in same file, or separate
-export { readFromClipboard, readRichContent } from './read'
-export { isClipboardSupported, isClipboardReadSupported } from './detect'
-export { copyWithFallback } from './fallback'
-export type { CopyOptions, ClipboardItemData } from './types'
-
-// src/index.ts (root barrel)
-export * from './clipboard'
-```
-
-```jsonc
-// package.json exports map
-{
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs",
-      "types": "./dist/index.d.ts"
-    },
-    "./clipboard": {
-      "import": "./dist/clipboard/index.mjs",
-      "require": "./dist/clipboard/index.cjs",
-      "types": "./dist/clipboard/index.d.ts"
+    for (const item of items) {
+      if (item.types.includes('text/html') && html === null) {
+        const blob = await item.getType('text/html')
+        html = await blob.text()
+      }
+      if (item.types.includes('text/plain') && text === null) {
+        const blob = await item.getType('text/plain')
+        text = await blob.text()
+      }
     }
-  },
-  "sideEffects": false
+
+    return { html, text }
+  } catch (error) {
+    // ... error handling ...
+    return null
+  }
+}
+```
+
+### Pattern 3: Guard for ClipboardItem API Availability
+
+**What:** Rich clipboard functions need an additional guard beyond what `isSecureContext()` checks. `ClipboardItem` constructor and `navigator.clipboard.write()` are newer APIs not available in all browsers that support `writeText()`.
+**When to use:** Every rich clipboard function.
+**Trade-offs:** Adds one more guard step, but prevents cryptic errors in browsers that support plain text clipboard but not ClipboardItem.
+
+**Example:**
+```typescript
+// In detect.ts — new exported function
+export function isRichClipboardSupported(): boolean {
+  return (
+    isBrowser() &&
+    isSecureContext() &&
+    typeof navigator.clipboard?.write === 'function' &&
+    typeof ClipboardItem !== 'undefined'
+  )
+}
+
+// In copy-rich.ts — guard usage
+if (typeof ClipboardItem === 'undefined') {
+  handleError(
+    createError('RICH_CLIPBOARD_NOT_SUPPORTED', 'ClipboardItem API not available'),
+    options?.onError,
+  )
+  return false
 }
 ```
 
 ## Data Flow
 
-### Copy Operation Flow
+### Rich Copy Operation Flow
 
 ```
-Consumer calls copyToClipboard(text, { onError })
+Consumer calls copyRichContent(html, plainText?, options?)
     |
     v
 [Guard: isBrowser()] --NO--> handleError() --> return false
     |YES
     v
-[Guard: navigator.clipboard exists?] --NO--> handleError() --> return false
-    |YES
-    v
 [Guard: isSecureContext()] --NO--> handleError() --> return false
     |YES
     v
-[Try: navigator.clipboard.writeText(text)]
+[Guard: ClipboardItem exists?] --NO--> handleError() --> return false
+    |YES
+    v
+[Guard: navigator.clipboard.write exists?] --NO--> handleError() --> return false
+    |YES
+    v
+[Construct Blob('text/html') + Blob('text/plain')]
+    |
+    v
+[new ClipboardItem({ 'text/html': htmlBlob, 'text/plain': textBlob })]
+    |
+    v
+[Try: navigator.clipboard.write([item])]
     |               |
-    |SUCCESS        |CATCH
+    |SUCCESS        |CATCH (NotAllowedError / other)
     v               v
-return true     handleError(code, msg, onError, cause)
-                    |
-                    v
-                return false
+return true     handleError() --> return false
 ```
 
-### Error Dispatch Flow
+### Rich Read Operation Flow
 
 ```
-handleError(code, message, onError?, cause?)
+Consumer calls readRichContent(options?)
     |
-    +--> createError({ code, message, cause })
+    v
+[Guards: isBrowser, isSecureContext, clipboard.read exists]
     |
-    +--> console.warn(`[@ngockhoi96] ${code}: ${message}`)
+    v
+[Try: navigator.clipboard.read()] --> ClipboardItem[]
     |
-    +--> onError?.(error)   // invoke callback if provided
+    v
+[For each item: check item.types]
+    |
+    +--> 'text/html' present? --> item.getType('text/html') --> blob.text() --> html
+    |
+    +--> 'text/plain' present? --> item.getType('text/plain') --> blob.text() --> text
+    |
+    v
+return { html, text } or null on error
 ```
 
-### Module Dependency Flow (Build Order)
+### Framework Adapter Data Flow
 
 ```
-utils/types.ts        (no deps - build first)
-    ^
+Adapter hook/composable/action
     |
-utils/env.ts          (no deps - build first)
-    ^
+    +--> Imports copyRichContent / readRichContent from @ngockhoi96/ctc
     |
-utils/errors.ts       (depends on utils/types.ts)
-    ^
+    +--> Wraps with framework-specific reactive state
+    |    (React: useState, Vue: shallowRef, Svelte: $state)
     |
-clipboard/types.ts    (depends on utils/types.ts)
-    ^
+    +--> Manages copied/error/reset lifecycle (same pattern as plain text)
     |
-clipboard/detect.ts   (depends on utils/env.ts)
-    ^
-    |
-clipboard/copy.ts     (depends on utils/env, utils/errors, clipboard/types)
-clipboard/read.ts     (depends on utils/env, utils/errors, clipboard/types)
-clipboard/fallback.ts (depends on utils/env, utils/errors, clipboard/types)
-    ^
-    |
-clipboard/index.ts    (barrel - depends on all clipboard/*.ts)
-    ^
-    |
-src/index.ts          (root barrel - depends on clipboard/index.ts)
+    +--> Returns { copyRich, pasteRich, copied, error, reset }
 ```
 
-### Key Data Flows
+## Framework Adapter Integration
 
-1. **Success path:** Consumer call -> guards pass -> browser API succeeds -> return `true`
-2. **Expected failure:** Consumer call -> guard fails OR browser API rejects -> `handleError()` logs warning + invokes `onError` callback -> return `false`/`null`
-3. **Feature detection:** Consumer calls `isClipboardSupported()` -> checks `isBrowser()` + `navigator.clipboard.writeText` existence -> returns `boolean` (no side effects)
+### What Changes Per Adapter
 
-## Scaling Considerations
+Each adapter needs rich clipboard hooks/composables that follow the exact same pattern as the existing `useCopyToClipboard` -- state management wrapper around a core function.
 
-| Scale | Architecture Adjustments |
-|-------|--------------------------|
-| 1 module (clipboard) | Single package, flat structure. Current architecture is correct. |
-| 3-5 modules (clipboard, storage, media, DOM) | Still single package. Add directories per module, add subpath exports. tsdown entry array grows. |
-| 5+ modules + framework adapters | Monorepo with pnpm workspaces. `packages/core/` for vanilla, `packages/react/` for hooks, `packages/vue/` for composables. |
+#### React (packages/react)
 
-### Scaling Priorities
+| File | Status | Description |
+|------|--------|-------------|
+| `src/use-copy-rich-content.ts` | NEW | `useCopyRichContent(initHtml?, initText?, options?)` hook |
+| `src/use-read-rich-content.ts` | NEW | `useReadRichContent(options?)` hook |
+| `src/index.ts` | MODIFIED | Add new exports |
 
-1. **First growth point:** Adding a second browser API module (e.g., storage). No architecture change needed -- just add `src/storage/` directory, add entry to tsdown config, add subpath export. The `utils/` layer already supports shared error handling and env detection.
-2. **Second growth point:** Framework adapters (React hooks, Vue composables). This triggers monorepo migration. Core package remains framework-agnostic. Adapter packages import from core and wrap with framework primitives. Use pnpm workspaces + turborepo.
+**Key design decision:** Separate hooks for rich copy and rich read, matching the core API separation. Do NOT merge plain text and rich into a single mega-hook. Each hook stays focused, composable, and tree-shakeable.
+
+#### Vue (packages/vue)
+
+| File | Status | Description |
+|------|--------|-------------|
+| `src/use-copy-rich-content.ts` | NEW | `useCopyRichContent()` composable |
+| `src/use-read-rich-content.ts` | NEW | `useReadRichContent()` composable |
+| `src/index.ts` | MODIFIED | Add new exports |
+
+Same pattern: `shallowRef` for `copied`/`error`, plain variable for timer.
+
+#### Svelte (packages/svelte)
+
+| File | Status | Description |
+|------|--------|-------------|
+| `src/action/copy-rich-action.ts` | NEW | `copyRichAction` Svelte action |
+| `src/runes/use-copy-rich-content.svelte.ts` | NEW | Runes-based rich copy |
+| `src/stores/use-copy-rich-content.ts` | NEW | Store-based rich copy |
+| `src/index.ts` | MODIFIED | Add action export |
+| `tsdown.config.ts` | UNCHANGED | Runes/stores entries already handle subpath pattern |
+
+**Svelte-specific note:** The runes entry uses uncompiled `.svelte.ts` source via the `svelte` export condition. New runes files follow this same pattern -- they are included in the `src/runes/` directory, and the tsdown entry for `runes` should expand to include them (or use a barrel within `src/runes/`).
+
+### Adapter Pattern: Parallel, Not Sequential
+
+Rich clipboard adapters do NOT depend on plain text adapters at code level. They independently import from `@ngockhoi96/ctc`. Build order:
+
+```
+@ngockhoi96/ctc (core) — build first, includes both plain + rich
+    |
+    +--> @ngockhoi96/ctc-react   — builds independently
+    +--> @ngockhoi96/ctc-vue     — builds independently
+    +--> @ngockhoi96/ctc-svelte  — builds independently
+```
+
+This is already how Turborepo handles it via `dependsOn: ["^build"]`.
+
+## Build Configuration Changes
+
+### Core tsdown.config.ts
+
+No changes needed. The rich clipboard functions are added to `src/clipboard/` and exported through the existing `src/clipboard/index.ts` barrel. The existing entry points remain:
+
+```typescript
+entry: {
+  index: 'src/index.ts',
+  'clipboard/index': 'src/clipboard/index.ts',
+}
+```
+
+Consumers importing from `@ngockhoi96/ctc` or `@ngockhoi96/ctc/clipboard` automatically get access to `copyRichContent` and `readRichContent`. Tree-shaking ensures unused functions are eliminated.
+
+### Size Budget
+
+The rich clipboard functions add `ClipboardItem` construction and `Blob` creation -- both are browser globals with zero import cost. The new code is ~40-60 lines per function (similar to existing copy/read functions). Expected impact:
+
+| Entry Point | Current Budget | Expected After |
+|-------------|---------------|----------------|
+| `dist/index.mjs` | < 1KB | < 1KB (tree-shakeable, consumers import what they use) |
+| `dist/clipboard/index.mjs` | < 1KB | ~1.2KB (all clipboard functions bundled together) |
+
+If the clipboard subpath exceeds 1KB, increase the size-limit for `dist/clipboard/index.mjs` to 1.5KB. The root entry stays under 1KB because bundlers tree-shake unused exports.
+
+## Error Code Changes
+
+Add to `ErrorCode` union in `src/lib/types.ts`:
+
+```typescript
+export type ErrorCode =
+  | 'CLIPBOARD_NOT_SUPPORTED'
+  | 'CLIPBOARD_PERMISSION_DENIED'
+  | 'CLIPBOARD_WRITE_FAILED'
+  | 'CLIPBOARD_READ_FAILED'
+  | 'INSECURE_CONTEXT'
+  | 'RICH_CLIPBOARD_NOT_SUPPORTED'  // NEW: ClipboardItem API unavailable
+```
+
+**Decision: One new error code, not many.** `RICH_CLIPBOARD_NOT_SUPPORTED` covers the case where `ClipboardItem` or `clipboard.write()` is absent. Write/read failures reuse the existing `CLIPBOARD_WRITE_FAILED` and `CLIPBOARD_READ_FAILED` codes -- the failure mechanism is the same, just the operation differs.
+
+Add `RICH_CLIPBOARD_NOT_SUPPORTED` to the `EXPECTED_ERROR_CODES` set in `src/lib/errors.ts` since it represents an environment limitation, not an unexpected failure.
 
 ## Anti-Patterns
 
-### Anti-Pattern 1: Logic in Barrel Files
+### Anti-Pattern 1: Merging Rich and Plain Functions
 
-**What people do:** Put helper functions, constants, or conditional logic in `index.ts` barrel files.
-**Why it's wrong:** Bundlers cannot tree-shake individual exports from a file that has side effects. If the barrel does anything other than re-export, importing one function may pull in the entire module.
-**Do this instead:** Barrel files contain ONLY `export { X } from './x'` statements. All logic lives in dedicated files.
+**What people do:** Add an `options.rich` flag to `copyToClipboard()` or overload its signature to accept HTML.
+**Why it's wrong:** Breaks the existing API contract. Forces all consumers to deal with the more complex `ClipboardItem` API even when they only need plain text. Makes the function signature confusing and the implementation harder to test.
+**Do this instead:** Separate functions: `copyToClipboard(text)` for plain, `copyRichContent(html, text?)` for rich. Clean, independent, tree-shakeable.
 
-### Anti-Pattern 2: Transparent Auto-Fallback
+### Anti-Pattern 2: Creating a clipboard/rich/ Subfolder
 
-**What people do:** Silently fall back from Clipboard API to `document.execCommand('copy')` inside `copyToClipboard()`.
-**Why it's wrong:** The consumer has no idea which code path ran. The deprecated API has different behavior (requires user gesture, injects DOM elements, may not work in iframes). Mixing modern and legacy APIs in one function creates an untestable, unpredictable surface.
-**Do this instead:** Export `copyWithFallback()` as an explicit separate function. Keep `copyToClipboard()` as modern-API-only. Consumer explicitly chooses which to use.
+**What people do:** Add `src/clipboard/rich/copy.ts`, `src/clipboard/rich/read.ts`, `src/clipboard/rich/types.ts`.
+**Why it's wrong:** Creates a false hierarchy. Rich clipboard is not a sub-domain of clipboard -- it is clipboard. The subfolder adds import path complexity, potential barrel file issues, and confusing navigation between "is this the plain or rich folder?" for contributors. It also tempts adding a `"./clipboard/rich"` subpath export that nobody needs.
+**Do this instead:** Keep flat: `copy-rich.ts` and `read-rich.ts` in `src/clipboard/`. The `-rich` suffix is sufficient disambiguation.
 
-### Anti-Pattern 3: Throwing on Expected Failures
+### Anti-Pattern 3: HTML Sanitization in the Library
 
-**What people do:** `throw new Error('Clipboard not supported')` when the API is unavailable.
-**Why it's wrong:** Clipboard failures are expected in many environments (HTTP, SSR, iframes, missing permissions). Forcing try/catch on every call site is bad DX for a non-critical operation.
-**Do this instead:** Return `false`/`null` for expected failures. Provide `onError` callback for consumers who need details. Only throw for programmer errors (e.g., wrong argument type at development time).
+**What people do:** Sanitize or validate HTML before copying to clipboard.
+**Why it's wrong:** This is a zero-dependency library. DOMPurify or similar adds runtime weight. HTML sanitization is the consumer's responsibility -- the library's job is to faithfully copy what it receives.
+**Do this instead:** Document that consumers should sanitize HTML before passing it to `copyRichContent()`. The function copies exactly what it receives.
 
-### Anti-Pattern 4: SSR Guards Only at Module Level
+### Anti-Pattern 4: Returning Raw ClipboardItem from readRichContent
 
-**What people do:** Put `if (typeof window !== 'undefined')` at the top of the module file, wrapping all exports.
-**Why it's wrong:** Module-level guards execute at import time, which can cause unexpected behavior with bundlers, break tree-shaking, and make testing harder (you cannot mock the guard state per-test).
-**Do this instead:** Guard at the function level. Each function checks `isBrowser()` at call time. This keeps imports safe (importing the module in SSR is fine) and makes behavior testable.
+**What people do:** Return `ClipboardItem[]` directly and let consumers parse MIME types.
+**Why it's wrong:** Defeats the purpose of the library (simple API over complex browser APIs). Consumers would need to know about `getType()`, `Blob.text()`, MIME type strings -- exactly the complexity this library abstracts.
+**Do this instead:** Return `{ html: string | null, text: string | null }`. Clean, typed, no browser API knowledge required.
 
-### Anti-Pattern 5: Deep Internal Imports by Consumers
+## Suggested Build Order
 
-**What people do:** Import from internal paths like `@ngockhoi96/core/utils/errors`.
-**Why it's wrong:** Internal modules are implementation details. Exposing them couples consumers to your file structure, preventing refactoring.
-**Do this instead:** Only expose subpath exports for public modules (`./clipboard`). `utils/` is never in the exports map. If consumers need error types, re-export them from the public barrel.
+For the v0.4.0 milestone, implement in this order:
 
-## Integration Points
-
-### External Services
-
-| Service | Integration Pattern | Notes |
-|---------|---------------------|-------|
-| Clipboard API | `navigator.clipboard.writeText()` / `readText()` | Requires HTTPS (secure context). Requires user gesture in some browsers. |
-| Permissions API | `navigator.permissions.query({ name: 'clipboard-read' })` | Optional; for pre-checking read permission. Not supported in all browsers. |
-| `document.execCommand('copy')` | Fallback via DOM selection + execCommand | Deprecated but works on HTTP. Explicit separate function. |
-
-### Internal Boundaries
-
-| Boundary | Communication | Notes |
-|----------|---------------|-------|
-| clipboard/ -> utils/env | Direct import | Pure function calls, no state |
-| clipboard/ -> utils/errors | Direct import | Error factory + dispatch, no state |
-| clipboard/ -> clipboard/types | Type-only import | Zero runtime cost, erased at compile |
-| src/index.ts -> clipboard/ | Re-export only | No logic, no transformation |
-
-## Build Configuration (tsdown)
-
-### Recommended tsdown.config.ts
-
-```typescript
-import { defineConfig } from 'tsdown'
-
-export default defineConfig({
-  entry: {
-    index: 'src/index.ts',
-    'clipboard/index': 'src/clipboard/index.ts',
-  },
-  format: ['esm', 'cjs'],
-  dts: true,
-  sourcemap: true,
-  clean: true,
-  exports: true,    // auto-generate package.json exports field
-  unbundle: false,   // bundle mode — inline utils/ into output
-})
-```
-
-### Key Build Decisions
-
-| Decision | Choice | Rationale |
-|----------|--------|-----------|
-| Bundle vs Unbundle | Bundle (default) | Utils layer gets inlined/tree-shaken. Consumers get fewer files. For a small library (<1KB), bundling is simpler. |
-| Entry points | Root + clipboard subpath | Two entries: `"."` and `"./clipboard"`. Subpath lets consumers import only clipboard module. |
-| exports: true | Enabled | Let tsdown auto-generate the exports map. Validate with publint before publishing. |
-| dts | Enabled | Auto-generates `.d.ts` files. Use `isolatedDeclarations: true` in tsconfig for faster oxc-transform path. |
+1. **Types first:** Add `RichClipboardContent`, `RichClipboardOptions`, new error code to `src/lib/types.ts` and `src/clipboard/types.ts`
+2. **Detection:** Add `isRichClipboardSupported()` to `src/clipboard/detect.ts`
+3. **Core write:** Implement `src/clipboard/copy-rich.ts` with unit tests
+4. **Core read:** Implement `src/clipboard/read-rich.ts` with unit tests
+5. **Barrel exports:** Update `src/clipboard/index.ts` and `src/index.ts`
+6. **E2E tests:** Add rich clipboard E2E tests to `tests/e2e/clipboard.spec.ts`
+7. **Adapters (parallel):** React, Vue, Svelte rich clipboard hooks/composables/actions
+8. **Size validation:** Run `pnpm size` and adjust budgets if needed
 
 ## Sources
 
-- [tsdown Package Exports documentation](https://tsdown.dev/options/package-exports) - AUTO-GENERATION of exports field
-- [tsdown Entry Points documentation](https://tsdown.dev/options/entry) - Multiple entry point configuration
-- [tsdown Unbundle Mode documentation](https://tsdown.dev/options/unbundle) - Bundle vs unbundle tradeoffs
-- [tsdown How It Works](https://tsdown.dev/guide/how-it-works) - Build pipeline overview
-- [clipboard-copy source code](https://github.com/feross/clipboard-copy) - Reference implementation (30 lines, execCommand fallback)
-- [Theodo - How to Make Tree-Shakeable Libraries](https://blog.theodo.com/2021/04/library-tree-shaking/) - Tree-shaking architecture patterns
-- [Cube Blog - Tree-shakeable JavaScript Libraries](https://cube.dev/blog/how-to-build-tree-shakeable-javascript-libraries) - sideEffects and module structure
-- [Smashing Magazine - Tree-Shaking Reference Guide](https://www.smashingmagazine.com/2021/05/tree-shaking-reference-guide/) - Comprehensive tree-shaking patterns
-- [VueUse Package Structure](https://app.studyraid.com/en/read/11889/378519/vueuse-package-structure-and-organization) - Module organization reference
-- [Dual publish ESM and CJS with tsdown](https://dev.to/hacksore/dual-publish-esm-and-cjs-with-tsdown-2l75) - Practical tsdown setup
+- [MDN: Clipboard.write()](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/write) - ClipboardItem API for writing arbitrary MIME types (Context7 verified, HIGH confidence)
+- [MDN: Clipboard.read()](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard/read) - Reading ClipboardItem objects with MIME type iteration (Context7 verified, HIGH confidence)
+- [MDN: ClipboardItem constructor](https://developer.mozilla.org/en-US/docs/Web/API/ClipboardItem) - Blob-based MIME type mapping (Context7 verified, HIGH confidence)
+- Existing codebase analysis: `packages/core/src/clipboard/`, `packages/react/`, `packages/vue/`, `packages/svelte/` (direct inspection, HIGH confidence)
+- Existing tsdown config and package.json exports patterns (direct inspection, HIGH confidence)
 
 ---
-*Architecture research for: Browser utilities library (clipboard-focused)*
-*Researched: 2026-04-08*
+*Architecture research for: Rich clipboard integration into @ngockhoi96/ctc*
+*Researched: 2026-04-16*
