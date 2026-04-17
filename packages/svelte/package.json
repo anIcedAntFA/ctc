@@ -79,7 +79,7 @@
 				"import": "./dist/runes.d.mts",
 				"require": "./dist/runes.d.cts"
 			},
-			"svelte": "./src/runes/index.ts",
+			"svelte": "./dist/runes.mjs",
 			"import": "./dist/runes.mjs",
 			"require": "./dist/runes.cjs"
 		},
@@ -95,7 +95,6 @@
 		"./package.json": "./package.json"
 	},
 	"files": [
-		"dist",
-		"src/runes"
+		"dist"
 	]
 }
