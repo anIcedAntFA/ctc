@@ -71,7 +71,7 @@ Developers can copy, read, and detect clipboard support in any browser environme
 - **Fallback strategy:** execCommand fallback is an explicit, separate function — keeps modern `copyToClipboard()` clean while providing HTTP/legacy escape hatch.
 - **Adapter return type:** All three adapters return `{ copy, copied, error, reset }` — `reset` was added beyond the original spec (CONTEXT.md D-03) as a useful design improvement.
 - **Competitive landscape:** Existing libs are either write-only (clipboard-copy), use deprecated APIs (copy-to-clipboard), or are framework-locked (@vueuse, usehooks-ts). This library targets the gap: framework-agnostic, modern, modular.
-- **Current state (v0.3.0):** 4 published packages, 13 completed plans, ~3,659 TypeScript LOC across packages/. Monorepo fully operational with turbo pipeline, independent versioning, and full CI.
+- **Current state (v0.4.0):** 4 published packages, all phases complete. Documentation overhauled in Phase 13: root README has emoji title, 12-badge row, "Why ctc?" narrative, "Similar / Related Projects" section; BENCHMARKS.md has 9-column comparison table; all package.json files have keywords/descriptions; CLAUDE.md Conventions and Architecture sections populated; CONTRIBUTING.md has Benchmarks section. Phase 13 complete 2026-04-17.
 
 ## Constraints
 
