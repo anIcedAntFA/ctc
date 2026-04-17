@@ -119,3 +119,17 @@ Phases execute in numeric order: 9 -> 10 -> 11 -> 12
 | 10. Rich Clipboard Core | v0.4.0 | 3/3 | Complete    | 2026-04-16 |
 | 11. Framework Adapters | v0.4.0 | 3/3 | Complete   | 2026-04-16 |
 | 12. Benchmarks & CI Hardening | v0.4.0 | 2/2 | Complete    | 2026-04-17 |
+
+### Phase 13: Documentation & Positioning Overhaul — update root and package READMEs (badges, benchmark section, library comparison), clarify ctc's advantages over copy-to-clipboard/clipboard-copy, add Similar/Related Projects section, update CONTRIBUTING/CLAUDE.md/package.json, fix untracked 11-PATTERNS.md git artifact, and answer open question about esbuild usage in benchmarks
+
+**Goal**: All published documentation accurately reflects the library's positioning — badges, npm metadata, benchmark comparison, and contributor guides are current and complete
+**Requirements**: TBD
+**Depends on:** Phase 12
+**Plans:** 5 plans
+
+Plans:
+- [ ] 13-01-PLAN.md — Commit untracked 11-PATTERNS.md git artifact
+- [ ] 13-02-PLAN.md — Update all five package.json files (keywords, descriptions, root homepage)
+- [ ] 13-03-PLAN.md — Root README overhaul (emoji title, 12-badge row, Why ctc? narrative, Similar/Related Projects section)
+- [ ] 13-04-PLAN.md — BENCHMARKS.md expansion (4 new columns, 3 new library rows)
+- [ ] 13-05-PLAN.md — CONTRIBUTING.md Benchmarks section + CLAUDE.md Conventions/Architecture + doc-local/temp-plan.md Q7
