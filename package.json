@@ -4,11 +4,23 @@
 	"private": true,
 	"type": "module",
 	"packageManager": "pnpm@10.29.3",
-	"description": "pnpm + Turborepo monorepo for @ngockhoi96/ctc and future framework adapters",
+	"description": "Monorepo for @ngockhoi96/ctc — zero-dependency clipboard utilities with React, Vue, and Svelte adapters",
+	"homepage": "https://github.com/anIcedAntFA/ctc#readme",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/anIcedAntFA/ctc.git"
 	},
+	"keywords": [
+		"clipboard",
+		"react",
+		"vue",
+		"svelte",
+		"typescript",
+		"tree-shakeable",
+		"browser",
+		"ssr-safe",
+		"monorepo"
+	],
 	"engines": {
 		"node": ">=20"
 	},
