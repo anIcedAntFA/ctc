@@ -35,7 +35,7 @@
 - [ ] **Phase 9: Architecture Audit & Tooling Foundation** - Settle clipboard/ folder shape, wire validation tooling, and prepare error codes for rich clipboard
 - [x] **Phase 10: Rich Clipboard Core** - Ship copyRichContent, readRichContent, and isRichClipboardSupported with full test coverage (completed 2026-04-16)
 - [x] **Phase 11: Framework Adapters** - Add useCopyRichContent / copyRichAction across React, Vue, and Svelte adapters (completed 2026-04-16)
-- [ ] **Phase 12: Benchmarks & CI Hardening** - Establish benchmarks workspace with published comparison results
+- [x] **Phase 12: Benchmarks & CI Hardening** - Establish benchmarks workspace with published comparison results (completed 2026-04-17)
 
 ## Phase Details
 
@@ -94,10 +94,10 @@ Plans:
   2. Bundle size comparison table (gzip + brotli) covering ctc vs clipboard-copy vs copy-to-clipboard is captured
   3. Wrapper overhead benchmarks with mocked clipboard API produce ops/sec results
   4. All benchmark results are published in `BENCHMARKS.md` at the repo root
-**Plans:** 1/2 plans executed
+**Plans:** 2/2 plans complete
 Plans:
 - [x] 12-01-PLAN.md — Benchmarks workspace scaffold, vitest bench config, core + React bench files
-- [ ] 12-02-PLAN.md — Bundle size measurement script, generate-benchmarks orchestrator, BENCHMARKS.md
+- [x] 12-02-PLAN.md — Bundle size measurement script, generate-benchmarks orchestrator, BENCHMARKS.md
 
 ## Progress
 
@@ -118,4 +118,4 @@ Phases execute in numeric order: 9 -> 10 -> 11 -> 12
 | 9. Architecture Audit & Tooling Foundation | v0.4.0 | 2/2 | Complete | 2026-04-16 |
 | 10. Rich Clipboard Core | v0.4.0 | 3/3 | Complete    | 2026-04-16 |
 | 11. Framework Adapters | v0.4.0 | 3/3 | Complete   | 2026-04-16 |
-| 12. Benchmarks & CI Hardening | v0.4.0 | 1/2 | In Progress|  |
+| 12. Benchmarks & CI Hardening | v0.4.0 | 2/2 | Complete   | 2026-04-17 |
