@@ -28,7 +28,7 @@
 		"dev": "turbo run dev --filter=./playground/*",
 		"build": "turbo run build",
 		"lint": "turbo run lint",
-		"lint:fix": "pnpm --filter=./packages/core exec biome check --fix",
+		"lint:fix": "turbo run lint:fix",
 		"format": "pnpm --filter=./packages/core exec biome format --write",
 		"test": "turbo run test",
 		"test:e2e": "turbo run test:e2e",
