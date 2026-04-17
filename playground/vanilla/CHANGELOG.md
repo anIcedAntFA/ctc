@@ -1,5 +1,12 @@
 # @ngockhoi96/playground-vanilla
 
+## 0.0.2
+
+### Patch Changes
+
+- Updated dependencies [[`9d6603d`](https://github.com/anIcedAntFA/ctc/commit/9d6603d9960c3f86b454bcf3fe395dc56e64d062)]:
+  - @ngockhoi96/ctc@0.3.0
+
 ## 0.0.1
 
 ### Patch Changes
