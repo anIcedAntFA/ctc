@@ -1,0 +1,29 @@
+{
+	"name": "@ngockhoi96/ctc-benchmarks",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"bench": "vitest bench",
+		"bench:size": "tsx scripts/measure-bundle-size.ts",
+		"bench:generate": "tsx scripts/generate-benchmarks.ts"
+	},
+	"devDependencies": {
+		"@ngockhoi96/ctc": "workspace:*",
+		"@ngockhoi96/ctc-react": "workspace:*",
+		"@testing-library/react": "^16.3.2",
+		"@types/react": "^18.0.0",
+		"@types/react-dom": "^18.0.0",
+		"clipboard-copy": "^4.0.1",
+		"copy-to-clipboard": "^3.3.3",
+		"esbuild": "^0.28.0",
+		"jsdom": "^26.0.0",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1",
+		"tsx": "^4.0.0",
+		"vitest": "4.1.3"
+	}
+}
