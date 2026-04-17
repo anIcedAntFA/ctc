@@ -1,16 +1,12 @@
 import { execFileSync } from 'node:child_process'
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { join, resolve } from 'node:path'
-import { measureAllBundleSizes, type SizeResult } from './measure-bundle-size.ts'
+import { measureAllBundleSizes, formatBytes, type SizeResult } from './measure-bundle-size.ts'
 
 const BENCHMARKS_DIR = resolve(import.meta.dirname!, '..')
 const REPO_ROOT = resolve(BENCHMARKS_DIR, '..')
 const BENCH_RESULTS_PATH = join(BENCHMARKS_DIR, 'bench-results.json')
 const BENCHMARKS_MD_PATH = join(REPO_ROOT, 'BENCHMARKS.md')
-
-function formatBytes(bytes: number): string {
-  return (bytes / 1024).toFixed(2) + ' KB'
-}
 
 function formatOps(ops: number): string {
   return ops.toLocaleString('en-US', { maximumFractionDigits: 0 })
