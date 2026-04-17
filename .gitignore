@@ -7,6 +7,7 @@ coverage/
 test-results/
 playwright-report/
 .turbo
+bench-results.json
 
 doc-local
 .claude
