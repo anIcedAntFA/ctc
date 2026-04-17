@@ -15,7 +15,7 @@ export interface SizeResult {
   brotli: number
 }
 
-function formatBytes(bytes: number): string {
+export function formatBytes(bytes: number): string {
   return (bytes / 1024).toFixed(2) + ' KB'
 }
 
@@ -23,7 +23,7 @@ function getPackageVersion(packageName: string): string {
   try {
     const pkgPath = require.resolve(`${packageName}/package.json`)
     const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'))
-    return pkg.version as string
+    return typeof pkg.version === 'string' ? pkg.version : 'unknown'
   } catch {
     return 'unknown'
   }
