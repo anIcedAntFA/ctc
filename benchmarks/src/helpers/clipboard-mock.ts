@@ -48,6 +48,10 @@ export function createClipboardMock(): ClipboardMock {
 			stubSecureContext()
 		},
 		uninstall() {
+			// Note: vi.unstubAllGlobals() only restores globals set via vi.stubGlobal().
+			// window.isSecureContext was set via Object.defineProperty in stubSecureContext()
+			// and is NOT restored here. Tests that require isSecureContext === false must
+			// explicitly reset it via Object.defineProperty after calling uninstall().
 			vi.unstubAllGlobals()
 		},
 	}
