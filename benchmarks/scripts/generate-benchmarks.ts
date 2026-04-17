@@ -1,9 +1,10 @@
 import { execFileSync } from 'node:child_process'
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
 import { join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { measureAllBundleSizes, formatBytes, type SizeResult } from './measure-bundle-size.ts'
 
-const BENCHMARKS_DIR = resolve(import.meta.dirname!, '..')
+const BENCHMARKS_DIR = resolve(fileURLToPath(new URL('.', import.meta.url)), '..')
 const REPO_ROOT = resolve(BENCHMARKS_DIR, '..')
 const BENCH_RESULTS_PATH = join(BENCHMARKS_DIR, 'bench-results.json')
 const BENCHMARKS_MD_PATH = join(REPO_ROOT, 'BENCHMARKS.md')
