@@ -73,13 +73,30 @@ A modular, tree-shakeable browser utilities library starting with clipboard oper
 <!-- GSD:conventions-start source:CONVENTIONS.md -->
 ## Conventions
 
-Conventions not yet established. Will populate as patterns emerge during development.
+1. **Flat `src/clipboard/` structure** — all clipboard functions live flat in `src/clipboard/`, no subfolders. Rationale: keeps tree-shaking simple and avoids import path churn.
+2. **Adapter return type shape** — all framework adapters return `{ copy/copyRich, copied, error, reset }` consistently across React hook, Vue composable, and Svelte action.
+3. **esbuild-for-measurement vs tsdown-for-build** — `esbuild` (in `benchmarks/`) measures competitor bundle sizes for BENCHMARKS.md. `tsdown` builds the library. Never confuse these roles.
+4. **SSR guard pattern** — all public functions guard with `typeof navigator !== 'undefined'` (or `typeof ClipboardItem !== 'undefined'` for rich clipboard) inside the function body, not at module level.
+5. **Error callback pattern** — `onError?: (error: BrowserUtilsError) => void` optional callback on all public functions. Never throw for expected failures.
 <!-- GSD:conventions-end -->
 
 <!-- GSD:architecture-start source:ARCHITECTURE.md -->
 ## Architecture
 
-Architecture not yet mapped. Follow existing patterns found in the codebase.
+Current monorepo shape:
+
+```
+packages/
+  core/      — @ngockhoi96/ctc (clipboard utilities, zero deps)
+  react/     — @ngockhoi96/ctc-react (React hook, peer: react >=18 <20)
+  vue/       — @ngockhoi96/ctc-vue (Vue 3 composable, peer: vue >=3 <4)
+  svelte/    — @ngockhoi96/ctc-svelte (Svelte action + runes/stores, peer: svelte >=4)
+playground/  — standalone Vite apps per framework (dev only, not published)
+benchmarks/  — Vitest bench + bundle size measurement scripts (not published)
+.changeset/  — versioning + changelog config (independent mode)
+```
+
+All packages are independently versioned via changesets. The CI pipeline runs lint → test → test:e2e → build → validate on every PR.
 <!-- GSD:architecture-end -->
 
 <!-- GSD:skills-start source:skills/ -->

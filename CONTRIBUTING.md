@@ -43,6 +43,31 @@ pnpm --filter @ngockhoi96/ctc-svelte test
 pnpm --filter @ngockhoi96/ctc test:e2e
 ```
 
+## 📊 Benchmarks
+
+Run all benchmarks from the repo root:
+
+```bash
+pnpm bench         # vitest bench (performance) + bundle size measurement
+pnpm size          # size-limit check against thresholds in package.json
+```
+
+To run benchmarks for a single package:
+
+```bash
+pnpm --filter @ngockhoi96/ctc bench
+```
+
+### Why is esbuild in devDependencies?
+
+`esbuild` appears in `benchmarks/package.json` devDependencies but is **not** the library's build tool — that is [tsdown](https://github.com/sxzz/tsdown).
+
+`esbuild` is used exclusively as a **bundle size measurement instrument** inside `benchmarks/scripts/measure-bundle-size.ts`. The script calls `esbuild.buildSync({ bundle: true, minify: true, format: 'esm', platform: 'browser' })` to produce a single minified ESM bundle for each competitor library, then measures the compressed size with Node.js `zlib.gzipSync` and `zlib.brotliCompressSync`. The results feed the Bundle Size Comparison table in `BENCHMARKS.md`.
+
+**Role summary:**
+- `tsdown` — builds the library output in `dist/` for publication
+- `esbuild` — measures minified competitor bundles for `BENCHMARKS.md` only
+
 ## 📁 Adding a new package
 
 1. Create `packages/<name>/` with `package.json`, `tsconfig.json`, and `tsdown.config.ts`.
