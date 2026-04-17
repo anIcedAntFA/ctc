@@ -4,7 +4,17 @@
 	"license": "MIT",
 	"type": "module",
 	"private": false,
-	"description": "Vue 3 composable for @ngockhoi96/ctc clipboard utilities",
+	"description": "Vue 3 composable for clipboard operations using @ngockhoi96/ctc — useCopyToClipboard as shallowRefs, SSR-safe",
+	"keywords": [
+		"clipboard",
+		"vue",
+		"vue3",
+		"composable",
+		"copy-to-clipboard",
+		"typescript",
+		"tree-shakeable",
+		"ssr-safe"
+	],
 	"homepage": "https://github.com/anIcedAntFA/ctc/tree/master/packages/vue#readme",
 	"repository": {
 		"type": "git",

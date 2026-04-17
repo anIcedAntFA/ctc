@@ -4,7 +4,19 @@
 	"license": "MIT",
 	"type": "module",
 	"private": false,
-	"description": "Modular, tree-shakeable browser utilities library",
+	"description": "Zero-dependency clipboard utilities for modern browsers — copy, read, and detect support. SSR-safe, TypeScript-native, tree-shakeable.",
+	"keywords": [
+		"clipboard",
+		"copy-to-clipboard",
+		"read-clipboard",
+		"clipboard-api",
+		"browser",
+		"typescript",
+		"tree-shakeable",
+		"ssr-safe",
+		"zero-dependencies",
+		"esm"
+	],
 	"homepage": "https://github.com/anIcedAntFA/ctc#readme",
 	"repository": {
 		"type": "git",
